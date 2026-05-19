@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf8f5;
+  --foreground: #1a1a2e;
+  --coral: #ff6b6b;
+  --coral-light: #ff8e8e;
+  --teal: #4ecdc4;
+  --teal-dark: #2a9d8f;
+  --sunset: #f4a261;
+  --sunset-pink: #e76f51;
+  --ocean: #264653;
+  --cream: #fefae0;
+  --card-bg: #ffffff;
+  --muted: #6b7280;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-coral: var(--coral);
+  --color-coral-light: var(--coral-light);
+  --color-teal: var(--teal);
+  --color-teal-dark: var(--teal-dark);
+  --color-sunset: var(--sunset);
+  --color-sunset-pink: var(--sunset-pink);
+  --color-ocean: var(--ocean);
+  --color-cream: var(--cream);
+  --color-card: var(--card-bg);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-dm-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+/* Miami gradient backgrounds */
+.gradient-miami {
+  background: linear-gradient(135deg, #ff6b6b 0%, #f4a261 50%, #4ecdc4 100%);
+}
+
+.gradient-sunset {
+  background: linear-gradient(160deg, #fff5f0 0%, #fef3e2 40%, #e8f8f5 100%);
+}
+
+.gradient-card {
+  background: linear-gradient(145deg, #ffffff 0%, #fefefe 60%, #f8fffe 100%);
+}
+
+.gradient-night {
+  background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+/* Card styles */
+.card {
+  @apply rounded-2xl border border-black/5 bg-white shadow-sm;
+}
+
+.card-elevated {
+  @apply rounded-2xl bg-white shadow-md shadow-black/5;
+}
+
+/* Status chips */
+.chip {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+
+/* Period sections */
+.period-morning {
+  border-left: 3px solid #f4a261;
+}
+
+.period-afternoon {
+  border-left: 3px solid #4ecdc4;
+}
+
+.period-night {
+  border-left: 3px solid #6c5ce7;
+}
+
+.period-late_night {
+  border-left: 3px solid #e17055;
+}
+
+/* Boarding pass */
+.boarding-pass {
+  background: linear-gradient(135deg, #1a1a2e 0%, #264653 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.boarding-pass::before {
+  content: "";
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: var(--background);
+  border-radius: 50%;
+}
+
+.boarding-pass::after {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: var(--background);
+  border-radius: 50%;
+}
+
+/* Bottom nav safe area */
+.bottom-nav {
+  padding-bottom: calc(0.75rem + var(--safe-bottom));
+}
+
+.main-content {
+  padding-bottom: calc(5rem + var(--safe-bottom));
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Scrollbar hide for horizontal scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Night mode page */
+.night-page {
+  background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+.night-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
 }

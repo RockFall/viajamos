@@ -1,0 +1,26 @@
+[
+  {
+    "id": "caio",
+    "name": "Caio Rocha",
+    "shortName": "Caio",
+    "color": "#FF6B6B"
+  },
+  {
+    "id": "father",
+    "name": "Pai",
+    "shortName": "Pai",
+    "color": "#4ECDC4"
+  },
+  {
+    "id": "mother",
+    "name": "Mãe",
+    "shortName": "Mãe",
+    "color": "#FFE66D"
+  },
+  {
+    "id": "sister",
+    "name": "Irmã",
+    "shortName": "Irmã",
+    "color": "#A78BFA"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "agr-1",
+    "text": "Sempre avisar no grupo do WhatsApp antes de sair sozinho.",
+    "order": 1
+  },
+  {
+    "id": "agr-2",
+    "text": "Todo mundo mantém o celular carregado e com dados.",
+    "order": 2
+  },
+  {
+    "id": "agr-3",
+    "text": "Se separar, combinar ponto de encontro antes de sair.",
+    "order": 3
+  },
+  {
+    "id": "agr-4",
+    "text": "Horário de saída de casa vale mais que horário do compromisso.",
+    "order": 4
+  },
+  {
+    "id": "agr-5",
+    "text": "Em restaurante reservado, sair com pelo menos 25 min de folga.",
+    "order": 5
+  },
+  {
+    "id": "agr-6",
+    "text": "Caio e irmã: combinar horário de retorno antes de ir à festa.",
+    "order": 6
+  }
+]

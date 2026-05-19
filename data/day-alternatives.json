@@ -1,0 +1,42 @@
+[
+  {
+    "id": "alt-24-rain",
+    "dayId": "day-24",
+    "trigger": "rain",
+    "title": "Dia indoor em Coconut Grove",
+    "description": "Books & Books, café coberto e jantar no Peacock Garden",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-24-tired",
+    "dayId": "day-24",
+    "trigger": "tired",
+    "title": "Dia leve perto de casa",
+    "description": "Mercado local, almoço no Grove e descanso à tarde",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-25-rain",
+    "dayId": "day-25",
+    "trigger": "rain",
+    "title": "PAMM + shopping indoor",
+    "description": "Pérez Art Museum, Bayside Marketplace e jantar coberto",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-25-energy",
+    "dayId": "day-25",
+    "trigger": "extra_energy",
+    "title": "Noite extra",
+    "description": "Wynwood Walls de noite + bar no Wynwood",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-26-tired",
+    "dayId": "day-26",
+    "trigger": "tired",
+    "title": "Sábado tranquilo",
+    "description": "Praia em Key Biscayne + jantar cedo em família",
+    "planItemIds": []
+  }
+]

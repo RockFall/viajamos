@@ -1,0 +1,57 @@
+[
+  {
+    "id": "doc-flights",
+    "title": "Confirmações de voo — American Airlines",
+    "type": "flight",
+    "url": "https://www.aa.com/reservation/view/find-your-reservation",
+    "notes": "Código de confirmação: XK7M2P (fictício para demo)"
+  },
+  {
+    "id": "doc-lodging",
+    "title": "Reserva Airbnb — Coconut Grove",
+    "type": "lodging",
+    "url": "https://www.airbnb.com/trips",
+    "notes": "Check-in 23/05 após 16h. Endereço: 3024 Aviation Avenue."
+  },
+  {
+    "id": "doc-jazz-ticket",
+    "title": "Ingressos Ball & Chain — Jazz",
+    "type": "ticket",
+    "url": "https://www.ballandchainmiami.com/events",
+    "notes": "4 ingressos para sábado 24/05"
+  },
+  {
+    "id": "doc-club-ticket",
+    "title": "Ingressos Club Space",
+    "type": "ticket",
+    "url": "https://www.clubspace.com/events",
+    "notes": "Caio + Irmã — sábado 26/05"
+  },
+  {
+    "id": "doc-mandolin",
+    "title": "Reserva Mandolin — 25/05 20h",
+    "type": "reservation",
+    "url": "https://www.mandolinmiami.com",
+    "notes": "Mesa para 4 pessoas"
+  },
+  {
+    "id": "doc-jaguar",
+    "title": "Reserva Jaguar — 26/05 20h",
+    "type": "reservation",
+    "url": "https://www.jaguarmiami.com",
+    "notes": "Mesa para 4 pessoas"
+  },
+  {
+    "id": "doc-insurance",
+    "title": "Seguro viagem",
+    "type": "insurance",
+    "notes": "Apólice no e-mail — cobertura médica internacional"
+  },
+  {
+    "id": "doc-ica",
+    "title": "ICA Miami — visita",
+    "type": "ticket",
+    "url": "https://icamiami.org/visit",
+    "notes": "Entrada gratuita, sem reserva necessária"
+  }
+]

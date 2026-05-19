@@ -1,0 +1,57 @@
+[
+  {
+    "id": "cl-before",
+    "title": "Antes da viagem",
+    "type": "before_trip",
+    "items": [
+      { "id": "cl-b1", "label": "Passaporte válido (6+ meses)" },
+      { "id": "cl-b2", "label": "ESTA / visto aprovado" },
+      { "id": "cl-b3", "label": "Seguro viagem contratado" },
+      { "id": "cl-b4", "label": "Cartões internacionais avisados" },
+      { "id": "cl-b5", "label": "eSIM / chip de dados" },
+      { "id": "cl-b6", "label": "Adaptador de tomada EUA" },
+      { "id": "cl-b7", "label": "Confirmação Airbnb impressa/salva" },
+      { "id": "cl-b8", "label": "Ingressos e reservas salvas offline" }
+    ]
+  },
+  {
+    "id": "cl-travel",
+    "title": "Dia de viagem — antes de sair",
+    "type": "travel_day",
+    "items": [
+      { "id": "cl-t1", "label": "Passaporte" },
+      { "id": "cl-t2", "label": "Cartão de embarque (digital)" },
+      { "id": "cl-t3", "label": "Celular carregado + carregador" },
+      { "id": "cl-t4", "label": "Remédios de uso contínuo" },
+      { "id": "cl-t5", "label": "Casaco leve (avião gelado)" },
+      { "id": "cl-t6", "label": "Documento da reserva Airbnb" },
+      { "id": "cl-t7", "label": "Dinheiro / cartão internacional" },
+      { "id": "cl-t8", "label": "Fones de ouvido" }
+    ]
+  },
+  {
+    "id": "cl-daily",
+    "title": "Antes de sair de casa (diário)",
+    "type": "daily",
+    "items": [
+      { "id": "cl-d1", "label": "Celular carregado" },
+      { "id": "cl-d2", "label": "Protetor solar" },
+      { "id": "cl-d3", "label": "Garrafa de água" },
+      { "id": "cl-d4", "label": "Carteira e documentos" },
+      { "id": "cl-d5", "label": "Avisar no grupo do WhatsApp" }
+    ]
+  },
+  {
+    "id": "cl-return",
+    "title": "Dia de volta",
+    "type": "return",
+    "items": [
+      { "id": "cl-r1", "label": "Check-out Airbnb feito" },
+      { "id": "cl-r2", "label": "Conferir pertences no quarto" },
+      { "id": "cl-r3", "label": "Check-in online do voo" },
+      { "id": "cl-r4", "label": "Líquidos na mala despachada" },
+      { "id": "cl-r5", "label": "Souvenirs na mala certa" },
+      { "id": "cl-r6", "label": "Uber para o aeroporto com folga" }
+    ]
+  }
+]

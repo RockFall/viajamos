@@ -1,0 +1,77 @@
+[
+  {
+    "id": "ep-lodging",
+    "name": "Nossa casa — Coconut Grove",
+    "type": "lodging",
+    "address": "3024 Aviation Avenue, Miami, FL 33133",
+    "notes": "Base da viagem. Check-in após 16h no dia 23.",
+    "googleMapsUrl": "https://maps.google.com/?q=3024+Aviation+Avenue+Miami+FL+33133",
+    "appleMapsUrl": "https://maps.apple.com/?address=3024+Aviation+Avenue,Miami,FL+33133",
+    "uberUrl": "https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=3024+Aviation+Avenue+Miami"
+  },
+  {
+    "id": "ep-airport",
+    "name": "Miami International Airport (MIA)",
+    "type": "airport",
+    "address": "2100 NW 42nd Ave, Miami, FL 33142",
+    "notes": "Chegada dia 23 ~22h. Partida dia 27 ~18h.",
+    "googleMapsUrl": "https://maps.google.com/?q=Miami+International+Airport",
+    "uberUrl": "https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=Miami+International+Airport"
+  },
+  {
+    "id": "ep-pharmacy",
+    "name": "CVS Pharmacy",
+    "type": "pharmacy",
+    "address": "3101 Grand Ave, Coconut Grove, FL 33133",
+    "notes": "Remédios, protetor solar, itens de farmácia.",
+    "googleMapsUrl": "https://maps.google.com/?q=CVS+Coconut+Grove+3101+Grand+Ave"
+  },
+  {
+    "id": "ep-market",
+    "name": "Trader Joe's",
+    "type": "market",
+    "address": "2990 McFarlane Rd, Miami, FL 33133",
+    "notes": "Mercado principal perto de casa.",
+    "googleMapsUrl": "https://maps.google.com/?q=Trader+Joes+Coconut+Grove"
+  },
+  {
+    "id": "ep-hospital",
+    "name": "Baptist Hospital",
+    "type": "hospital",
+    "address": "8900 N Kendall Dr, Miami, FL 33176",
+    "notes": "Emergência — ligar 911 nos EUA.",
+    "googleMapsUrl": "https://maps.google.com/?q=Baptist+Hospital+Miami"
+  },
+  {
+    "id": "ep-shopping",
+    "name": "CocoWalk",
+    "type": "shopping",
+    "address": "3015 Grand Ave, Coconut Grove, FL 33133",
+    "notes": "Shopping pequeno a pé do Grove.",
+    "googleMapsUrl": "https://maps.google.com/?q=CocoWalk+Coconut+Grove"
+  },
+  {
+    "id": "ep-consulate",
+    "name": "Consulado Geral do Brasil",
+    "type": "consulate",
+    "address": "80 SW 8th St, Miami, FL 33130",
+    "notes": "Emergências consulares.",
+    "googleMapsUrl": "https://maps.google.com/?q=Brazilian+Consulate+Miami"
+  },
+  {
+    "id": "ep-meeting",
+    "name": "Ponto de encontro — CocoWalk",
+    "type": "meeting_point",
+    "address": "3015 Grand Ave, Coconut Grove, FL 33133",
+    "notes": "Combinado da família se alguém se perder.",
+    "googleMapsUrl": "https://maps.google.com/?q=CocoWalk+Coconut+Grove"
+  },
+  {
+    "id": "ep-apple",
+    "name": "Apple Store — Lincoln Road",
+    "type": "shopping",
+    "address": "1021 Lincoln Rd, Miami Beach, FL 33139",
+    "notes": "Suporte Apple se precisar.",
+    "googleMapsUrl": "https://maps.google.com/?q=Apple+Store+Lincoln+Road"
+  }
+]

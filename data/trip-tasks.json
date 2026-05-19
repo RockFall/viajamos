@@ -1,0 +1,67 @@
+[
+  {
+    "id": "task-1",
+    "title": "Comprar ingresso do jazz no Ball & Chain",
+    "dueDate": "2026-05-24",
+    "relatedPlanId": "evt-24-jazz",
+    "assignedTo": "caio",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": "task-2",
+    "title": "Confirmar reserva do Mandolin (25/05)",
+    "dueDate": "2026-05-25",
+    "relatedPlanId": "evt-25-dinner",
+    "assignedTo": "mother",
+    "status": "done",
+    "priority": "medium"
+  },
+  {
+    "id": "task-3",
+    "title": "Comprar ingressos Club Space",
+    "dueDate": "2026-05-26",
+    "relatedPlanId": "evt-26-club",
+    "assignedTo": "caio",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": "task-4",
+    "title": "Escolher restaurante do domingo (se sobrar tempo)",
+    "dueDate": "2026-05-26",
+    "status": "open",
+    "priority": "low"
+  },
+  {
+    "id": "task-5",
+    "title": "Definir quem vai na festa do Club Space",
+    "dueDate": "2026-05-25",
+    "relatedPlanId": "evt-26-club",
+    "status": "done",
+    "priority": "medium"
+  },
+  {
+    "id": "task-6",
+    "title": "Confirmar horário de check-out Airbnb",
+    "dueDate": "2026-05-27",
+    "status": "open",
+    "priority": "medium"
+  },
+  {
+    "id": "task-7",
+    "title": "Fazer check-in online do voo de volta",
+    "dueDate": "2026-05-27",
+    "relatedPlanId": "evt-27-departure",
+    "assignedTo": "father",
+    "status": "open",
+    "priority": "high"
+  },
+  {
+    "id": "task-8",
+    "title": "Comprar eSIM / chip de dados EUA",
+    "dueDate": "2026-05-22",
+    "status": "open",
+    "priority": "high"
+  }
+]
