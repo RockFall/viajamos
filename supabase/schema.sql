@@ -171,6 +171,7 @@ CREATE TABLE possible_plans (
   source plan_source DEFAULT 'manual',
   notes TEXT,
   is_nearby BOOLEAN NOT NULL DEFAULT FALSE,
+  cuisine TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

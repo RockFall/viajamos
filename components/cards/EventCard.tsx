@@ -49,96 +49,115 @@ export function EventCard({
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
       </div>
       <div className="p-4">
-      <div className="flex items-start gap-3">
-        {event.startTime && (
-          <div className="w-14 shrink-0 text-right">
-            <p className="font-serif text-lg italic leading-none text-terracotta">
-              {event.startTime}
-            </p>
+        <div className="flex items-start gap-3">
+          {event.startTime && (
+            <div className="w-12 shrink-0 pt-0.5 text-right">
+              <p className="font-serif text-lg italic leading-none text-terracotta">
+                {event.startTime}
+              </p>
+            </div>
+          )}
+
+          <div className="min-w-0 w-full flex-1">
+            {event.groupLabel && (
+              <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.2em] text-terracotta">
+                {event.groupLabel}
+              </p>
+            )}
+            <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5">
+              <div className="flex min-w-0 flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1 rounded-full bg-sand-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-warm-black/70">
+                  <CategoryIcon
+                    category={event.category}
+                    size={11}
+                    strokeWidth={2.25}
+                    className="shrink-0 text-terracotta-deep"
+                  />
+                  {CATEGORY_LABELS[event.category]}
+                </span>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${STATUS_PILL[event.status]}`}
+                >
+                  {STATUS_LABELS[event.status]}
+                </span>
+              </div>
+              <FamilyAvatars
+                people={event.people}
+                size="sm"
+                ringClass="ring-card"
+              />
+            </div>
+            <h4 className="font-serif mt-2 text-lg leading-snug text-warm-black">
+              {event.title}
+            </h4>
+            {event.description && (
+              <p className="mt-1.5 text-sm leading-snug text-muted-foreground">
+                {event.description}
+              </p>
+            )}
+            {event.locationName && (
+              <p className="mt-2 flex items-start gap-1 text-[11px] leading-snug text-muted-foreground">
+                <MapPin
+                  size={12}
+                  className="mt-0.5 shrink-0 text-terracotta"
+                />
+                <span className="min-w-0">{event.locationName}</span>
+              </p>
+            )}
+            {event.leaveBy && (
+              <p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
+                <Clock size={12} className="shrink-0" />
+                Sair às {event.leaveBy}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {(event.googleMapsUrl ||
+          event.appleMapsUrl ||
+          event.uberUrl ||
+          event.websiteUrl ||
+          event.ticketUrl ||
+          event.reservationUrl ||
+          onEdit ||
+          onDelete) && (
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <QuickActions
+              googleMapsUrl={event.googleMapsUrl}
+              appleMapsUrl={event.appleMapsUrl}
+              uberUrl={event.uberUrl}
+              websiteUrl={event.websiteUrl}
+              ticketUrl={event.ticketUrl}
+              reservationUrl={event.reservationUrl}
+              compact
+              className="min-w-0 flex-1 gap-2"
+            />
+            {(onEdit || onDelete) && (
+              <div className="ml-auto flex shrink-0 items-center gap-0.5">
+                {onEdit && (
+                  <button
+                    type="button"
+                    onClick={onEdit}
+                    className="rounded-lg p-1.5 text-muted-foreground transition hover:bg-sand-100"
+                    aria-label="Editar"
+                  >
+                    <Pencil size={15} />
+                  </button>
+                )}
+                {onDelete && (
+                  <button
+                    type="button"
+                    onClick={onDelete}
+                    className="rounded-lg p-1.5 text-terracotta transition hover:bg-terracotta/10"
+                    aria-label="Excluir"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         )}
-
-        <div className="min-w-0 flex-1">
-          {event.groupLabel && (
-            <p className="mb-1 text-[9px] font-bold uppercase tracking-[0.2em] text-terracotta">
-              {event.groupLabel}
-            </p>
-          )}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1 rounded-full bg-sand-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-warm-black/70">
-              <CategoryIcon
-                category={event.category}
-                size={11}
-                strokeWidth={2.25}
-                className="shrink-0 text-terracotta-deep"
-              />
-              {CATEGORY_LABELS[event.category]}
-            </span>
-            <span
-              className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${STATUS_PILL[event.status]}`}
-            >
-              {STATUS_LABELS[event.status]}
-            </span>
-          </div>
-          <h4 className="font-serif mt-1.5 text-lg leading-tight text-warm-black">
-            {event.title}
-          </h4>
-          {event.description && (
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              {event.description}
-            </p>
-          )}
-          {event.locationName && (
-            <p className="mt-2 flex items-center gap-1 text-[11px] text-muted-foreground">
-              <MapPin size={12} className="shrink-0 text-terracotta" />
-              {event.locationName}
-            </p>
-          )}
-          {event.leaveBy && (
-            <p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
-              <Clock size={12} className="shrink-0" />
-              Sair às {event.leaveBy}
-            </p>
-          )}
-        </div>
-
-        <div className="flex shrink-0 flex-col items-end gap-2">
-          <FamilyAvatars people={event.people} size="sm" ringClass="ring-card" />
-          <div className="flex gap-0.5">
-            {onEdit && (
-              <button
-                type="button"
-                onClick={onEdit}
-                className="rounded-lg p-1.5 text-muted-foreground transition hover:bg-sand-100"
-                aria-label="Editar"
-              >
-                <Pencil size={15} />
-              </button>
-            )}
-            {onDelete && (
-              <button
-                type="button"
-                onClick={onDelete}
-                className="rounded-lg p-1.5 text-terracotta transition hover:bg-terracotta/10"
-                aria-label="Excluir"
-              >
-                <Trash2 size={15} />
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <QuickActions
-        googleMapsUrl={event.googleMapsUrl}
-        appleMapsUrl={event.appleMapsUrl}
-        uberUrl={event.uberUrl}
-        websiteUrl={event.websiteUrl}
-        ticketUrl={event.ticketUrl}
-        reservationUrl={event.reservationUrl}
-        compact
-        className="mt-4"
-      />
       </div>
     </div>
   );

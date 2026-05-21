@@ -7,10 +7,12 @@ import { PlanosHeader } from "@/components/planos/PlanosHeader";
 import { PlanFilters } from "@/components/planos/PlanFilters";
 import { PlanosGallery } from "@/components/planos/PlanosGallery";
 import type { PossiblePlan, BestFor } from "@/types";
+import { sortPossiblePlans } from "@/lib/planos/sort-possible-plans";
 
 export default function PlanosPage() {
   const { possiblePlans, isHydrated } = useTrip();
   const [category, setCategory] = useState("");
+  const [cuisine, setCuisine] = useState("");
   const [intensity, setIntensity] = useState("");
   const [bestFor, setBestFor] = useState("");
   const [nearbyOnly, setNearbyOnly] = useState(false);
@@ -23,28 +25,38 @@ export default function PlanosPage() {
   );
 
   const filtered = useMemo(() => {
-    return activePlans.filter((p) => {
+    const matches = activePlans.filter((p) => {
       if (category && p.category !== category) return false;
+      if (cuisine && p.cuisine !== cuisine) return false;
       if (intensity && p.intensity !== intensity) return false;
       if (bestFor && !p.bestFor.includes(bestFor as BestFor)) return false;
       if (nearbyOnly && !p.isNearby) return false;
       return true;
     });
-  }, [activePlans, category, intensity, bestFor, nearbyOnly]);
+    return sortPossiblePlans(matches);
+  }, [activePlans, category, cuisine, intensity, bestFor, nearbyOnly]);
 
   const featured = useMemo(
     () =>
-      filtered.filter(
-        (p) => p.status === "shortlisted" || p.isNearby
+      sortPossiblePlans(
+        filtered.filter((p) => p.status === "shortlisted" || p.isNearby)
       ),
     [filtered]
   );
 
   const clearFilters = useCallback(() => {
     setCategory("");
+    setCuisine("");
     setIntensity("");
     setBestFor("");
     setNearbyOnly(false);
+  }, []);
+
+  const handleCategoryChange = useCallback((value: string) => {
+    setCategory(value);
+    if (value !== "restaurant") {
+      setCuisine("");
+    }
   }, []);
 
   const openModal = (plan: PossiblePlan) => {
@@ -67,10 +79,12 @@ export default function PlanosPage() {
       <main className="mx-auto mt-6 w-full min-w-0 max-w-[48ch] space-y-8 px-6">
         <PlanFilters
           category={category}
+          cuisine={cuisine}
           intensity={intensity}
           bestFor={bestFor}
           nearbyOnly={nearbyOnly}
-          onCategoryChange={setCategory}
+          onCategoryChange={handleCategoryChange}
+          onCuisineChange={setCuisine}
           onIntensityChange={setIntensity}
           onBestForChange={setBestFor}
           onNearbyOnlyChange={setNearbyOnly}

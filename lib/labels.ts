@@ -11,6 +11,7 @@ import type {
   NightEventType,
   PossiblePlanCategory,
   PossiblePlanStatus,
+  RestaurantCuisine,
   TaskPriority,
 } from "@/types";
 
@@ -68,6 +69,19 @@ export const CATEGORY_COLORS: Record<EventCategory, string> = {
   rest: "bg-zinc-100 text-zinc-600",
   experience: "bg-indigo-100 text-indigo-700",
   event: "bg-amber-100 text-amber-700",
+};
+
+export const RESTAURANT_CUISINE_LABELS: Record<RestaurantCuisine, string> = {
+  japones: "Japonês",
+  brasileiro: "Brasileiro",
+  cubano: "Cubano",
+  italiano: "Italiano",
+  mexicano: "Mexicano",
+  peruano: "Peruano",
+  mediterraneo: "Mediterrâneo",
+  tailandes: "Tailandês",
+  frutos_do_mar: "Frutos do mar",
+  contemporaneo: "Contemporâneo",
 };
 
 export const POSSIBLE_CATEGORY_LABELS: Record<PossiblePlanCategory, string> = {

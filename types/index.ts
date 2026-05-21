@@ -67,6 +67,18 @@ export interface ItineraryEvent {
   leaveBy?: string;
 }
 
+export type RestaurantCuisine =
+  | "japones"
+  | "brasileiro"
+  | "cubano"
+  | "italiano"
+  | "mexicano"
+  | "peruano"
+  | "mediterraneo"
+  | "tailandes"
+  | "frutos_do_mar"
+  | "contemporaneo";
+
 export type PossiblePlanCategory =
   | "restaurant"
   | "cafe"
@@ -126,6 +138,7 @@ export interface PossiblePlan {
   source?: "manual" | "ai_generated" | "user_added";
   notes?: string;
   isNearby?: boolean;
+  cuisine?: RestaurantCuisine;
 }
 
 export type AlternativeTrigger =

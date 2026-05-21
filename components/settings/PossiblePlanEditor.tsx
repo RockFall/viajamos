@@ -12,6 +12,8 @@ import {
 } from "@/lib/settings/table-registry";
 import { inputClass, labelClass, selectClass, textareaClass } from "@/lib/settings/form-ui";
 import type { BestFor, EventPeriod, PossiblePlan } from "@/types";
+import { RESTAURANT_CUISINE_LABELS } from "@/lib/labels";
+import { RESTAURANT_CUISINES } from "@/lib/planos/restaurant-cuisines";
 import { Save, Trash2 } from "lucide-react";
 import { TableRecordList } from "./TableRecordList";
 
@@ -106,11 +108,13 @@ export function PossiblePlanEditor({
                 <label className={labelClass}>Categoria</label>
                 <select
                   value={draft.category}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const category = e.target.value as PossiblePlan["category"];
                     patch({
-                      category: e.target.value as PossiblePlan["category"],
-                    })
-                  }
+                      category,
+                      ...(category !== "restaurant" ? { cuisine: undefined } : {}),
+                    });
+                  }}
                   className={selectClass}
                 >
                   {Object.entries(POSSIBLE_CATEGORY_OPTIONS).map(([k, v]) => (
@@ -139,6 +143,29 @@ export function PossiblePlanEditor({
                 </select>
               </div>
             </div>
+            {draft.category === "restaurant" && (
+              <div>
+                <label className={labelClass}>Cozinha</label>
+                <select
+                  value={draft.cuisine ?? ""}
+                  onChange={(e) =>
+                    patch({
+                      cuisine: e.target.value
+                        ? (e.target.value as PossiblePlan["cuisine"])
+                        : undefined,
+                    })
+                  }
+                  className={selectClass}
+                >
+                  <option value="">—</option>
+                  {RESTAURANT_CUISINES.map((c) => (
+                    <option key={c} value={c}>
+                      {RESTAURANT_CUISINE_LABELS[c]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             <div>
               <label className={labelClass}>Intensidade</label>
               <select

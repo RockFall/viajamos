@@ -252,6 +252,7 @@ export interface PossiblePlanRow {
   source: PossiblePlan["source"] | null;
   notes: string | null;
   is_nearby: boolean;
+  cuisine: string | null;
 }
 
 export interface NightEventRow {
@@ -408,6 +409,7 @@ export function rowToPossiblePlan(row: PossiblePlanRow): PossiblePlan {
     source: row.source ?? undefined,
     notes: row.notes ?? undefined,
     isNearby: row.is_nearby,
+    cuisine: (row.cuisine as PossiblePlan["cuisine"]) ?? undefined,
   };
 }
 
@@ -625,6 +627,7 @@ export function possiblePlanToRow(plan: PossiblePlan): PossiblePlanRow {
     source: plan.source ?? null,
     notes: plan.notes ?? null,
     is_nearby: plan.isNearby ?? false,
+    cuisine: plan.cuisine ?? null,
   };
 }
 
