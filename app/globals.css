@@ -173,6 +173,13 @@ body {
   padding-bottom: calc(6.5rem + var(--safe-bottom));
 }
 
+/* Cancels main layout px-4/pt-4 so page backgrounds reach the edges. */
+.page-full-bleed {
+  width: calc(100% + 2rem);
+  margin-inline: -1rem;
+  margin-top: -1rem;
+}
+
 /* Animations */
 @keyframes fade-in {
   from {

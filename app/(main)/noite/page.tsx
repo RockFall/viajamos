@@ -86,14 +86,14 @@ export default function NoitePage() {
 
   if (!isHydrated) {
     return (
-      <div className="relative -mx-4 -mt-4 flex min-h-screen w-full max-w-full items-center justify-center overflow-x-hidden bg-warm-black pb-36 text-sand-200/60">
+      <div className="page-full-bleed relative flex min-h-screen items-center justify-center overflow-x-hidden bg-warm-black pb-36 text-sand-200/60">
         <p className="text-sm">Carregando radar da noite…</p>
       </div>
     );
   }
 
   return (
-    <div className="relative -mx-4 -mt-4 min-h-screen w-full max-w-full overflow-x-hidden bg-warm-black pb-36 text-sand-50">
+    <div className="page-full-bleed relative min-h-screen overflow-x-hidden bg-warm-black pb-36 text-sand-50">
       <div className="pointer-events-none absolute -top-32 -right-24 size-96 rounded-full bg-terracotta/20 blur-[120px]" />
       <div className="pointer-events-none absolute top-1/3 -left-32 size-96 rounded-full bg-terracotta-deep/15 blur-[120px]" />
 
