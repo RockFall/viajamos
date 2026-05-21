@@ -1,5 +1,6 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
+import Image from "next/image";
+import { resolveHeroImage, resolveTripDayImage } from "@/lib/images/resolve";
 import { WeatherWidget } from "./WeatherWidget";
 import type { WeatherArea } from "@/lib/weather";
 
@@ -11,6 +12,8 @@ interface AgoraHeroProps {
   showWeather?: boolean;
   eyebrow?: string;
   dateRail?: ReactNode;
+  dayId?: string;
+  dayArea?: "Miami" | "Islamorada" | "Travel";
 }
 
 function themeLines(theme: string): [string, string?] {
@@ -33,15 +36,32 @@ export function AgoraHero({
   showWeather = true,
   eyebrow,
   dateRail,
+  dayId,
+  dayArea,
 }: AgoraHeroProps) {
   const [line1, line2] = themeLines(theme);
+  const heroAlt =
+    dayArea === "Islamorada"
+      ? "Vista das Florida Keys em Islamorada"
+      : dayArea === "Travel"
+        ? "Estrada cênica pelas Florida Keys"
+        : "Cena tropical em Miami";
+  const heroSrc = dayId
+    ? resolveTripDayImage(dayId, dayArea)
+    : resolveHeroImage(
+        dayArea === "Islamorada"
+          ? "islamorada"
+          : dayArea === "Travel"
+            ? "travel"
+            : "miami"
+      );
 
   return (
     <div className="relative">
       <div className="relative h-[248px] w-full overflow-hidden">
         <Image
-          src="/images/hero-botanical.jpg"
-          alt="Folhagem tropical sobre parede terracota ao pôr do sol em Miami"
+          src={heroSrc}
+          alt={heroAlt}
           fill
           priority
           className="object-cover"

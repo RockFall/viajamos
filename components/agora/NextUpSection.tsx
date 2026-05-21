@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import type { TripDay } from "@/types";
+import { TripDayImage } from "@/components/ui/EntityImage";
 import { SectionLabel } from "./SectionLabel";
 
 interface NextUpSectionProps {
@@ -29,9 +29,10 @@ export function NextUpSection({
         {tomorrowDay && (
           <div className="col-span-3 overflow-hidden rounded-[24px] bg-card ring-1 ring-border">
             <div className="relative aspect-[4/3] w-full">
-              <Image
-                src="/images/tomorrow-boat.jpg"
-                alt="Vista aérea de barco em águas turquesa"
+              <TripDayImage
+                dayId={tomorrowDay.id}
+                area={tomorrowDay.area}
+                alt={tomorrowDay.title}
                 fill
                 className="object-cover"
                 sizes="(max-width: 320px) 60vw, 320px"

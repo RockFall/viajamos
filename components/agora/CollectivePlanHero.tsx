@@ -1,21 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import type { ItineraryEvent } from "@/types";
+import { EntityImage } from "@/components/ui/EntityImage";
 import { QuickActions } from "@/components/ui/QuickActions";
-
-function planImageSrc(title: string): string {
-  if (/mandolin/i.test(title)) return "/images/dinner-mandolin.jpg";
-  return "/images/hero-botanical.jpg";
-}
 
 export function CollectivePlanHero({ event }: { event: ItineraryEvent }) {
   return (
     <div className="overflow-hidden rounded-[28px] bg-card shadow-[0_25px_50px_-25px_rgba(60,30,20,0.25)] ring-1 ring-border">
       <div className="relative">
         <div className="relative aspect-[4/3] w-full">
-          <Image
-            src={planImageSrc(event.title)}
+          <EntityImage
+            kind="itinerary-events"
+            entityId={event.id}
+            category={event.category}
             alt={event.title}
             fill
             className="object-cover"

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { resolveHeroImage } from "@/lib/images/resolve";
 
 interface PlanosHeaderProps {
   ideaCount: number;
@@ -11,10 +12,11 @@ export function PlanosHeader({ ideaCount }: PlanosHeaderProps) {
     <div className="relative overflow-hidden">
       <div className="relative h-[200px] w-full">
         <Image
-          src="/images/hero-botanical.jpg"
+          src={resolveHeroImage("plans")}
           alt="Folhagem tropical em Miami"
           fill
           priority
+          unoptimized
           className="object-cover"
           sizes="(max-width: 512px) 100%, 512px"
         />

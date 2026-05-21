@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-21T04:19:50.856Z",
+  "source": "supabase/viajamos_trip_seed_miami_islamorada_2026_FINAL_schema_checked.sql",
+  "entities": {
+    "trip-days": {
+      "day-23": "/images/entities/trip-days/day-23.webp",
+      "day-24": "/images/entities/trip-days/day-24.webp",
+      "day-25": "/images/entities/trip-days/day-25.webp",
+      "day-26": "/images/entities/trip-days/day-26.webp",
+      "day-27": "/images/entities/trip-days/day-27.webp",
+      "day-28": "/images/entities/trip-days/day-28.webp",
+      "day-30": "/images/entities/trip-days/day-30.webp"
+    },
+    "itinerary-events": {
+      "evt-23-greenstreet": "/images/entities/itinerary-events/evt-23-greenstreet.webp",
+      "evt-23-vizcaya": "/images/entities/itinerary-events/evt-23-vizcaya.webp",
+      "evt-23-air-sea": "/images/entities/itinerary-events/evt-23-air-sea.webp",
+      "evt-23-regatta": "/images/entities/itinerary-events/evt-23-regatta.webp",
+      "evt-23-carl-cox": "/images/entities/itinerary-events/evt-23-carl-cox.webp",
+      "evt-24-air-sea": "/images/entities/itinerary-events/evt-24-air-sea.webp",
+      "evt-24-charlotte": "/images/entities/itinerary-events/evt-24-charlotte.webp",
+      "evt-25-pamm": "/images/entities/itinerary-events/evt-25-pamm.webp",
+      "evt-25-little-havana": "/images/entities/itinerary-events/evt-25-little-havana.webp",
+      "evt-25-ball-chain": "/images/entities/itinerary-events/evt-25-ball-chain.webp",
+      "evt-26-wynwood": "/images/entities/itinerary-events/evt-26-wynwood.webp",
+      "evt-26-betsy-jazz": "/images/entities/itinerary-events/evt-26-betsy-jazz.webp",
+      "evt-27-fairchild-or-grove": "/images/entities/itinerary-events/evt-27-fairchild-or-grove.webp",
+      "evt-27-road": "/images/entities/itinerary-events/evt-27-road.webp",
+      "evt-28-theater": "/images/entities/itinerary-events/evt-28-theater.webp",
+      "evt-28-square": "/images/entities/itinerary-events/evt-28-square.webp",
+      "evt-29-diving": "/images/entities/itinerary-events/evt-29-diving.webp",
+      "evt-29-rainbarrel": "/images/entities/itinerary-events/evt-29-rainbarrel.webp",
+      "evt-29-fkbc": "/images/entities/itinerary-events/evt-29-fkbc.webp",
+      "evt-29-morada": "/images/entities/itinerary-events/evt-29-morada.webp"
+    },
+    "night-events": {
+      "ne-23-carl-cox": "/images/entities/night-events/ne-23-carl-cox.webp",
+      "ne-24-charlotte": "/images/entities/night-events/ne-24-charlotte.webp",
+      "ne-23-two-friends": "/images/entities/night-events/ne-23-two-friends.webp",
+      "ne-23-betsy-lavie": "/images/entities/night-events/ne-23-betsy-lavie.webp",
+      "ne-25-ball-chain": "/images/entities/night-events/ne-25-ball-chain.webp",
+      "ne-27-betsy-angel": "/images/entities/night-events/ne-27-betsy-angel.webp"
+    },
+    "possible-plans": {
+      "pp-miami-greenstreet": "/images/entities/possible-plans/pp-miami-greenstreet.webp",
+      "pp-miami-vizcaya": "/images/entities/possible-plans/pp-miami-vizcaya.webp",
+      "pp-miami-regatta": "/images/entities/possible-plans/pp-miami-regatta.webp",
+      "pp-miami-cocowalk": "/images/entities/possible-plans/pp-miami-cocowalk.webp",
+      "pp-miami-trader-joes": "/images/entities/possible-plans/pp-miami-trader-joes.webp",
+      "pp-miami-air-sea": "/images/entities/possible-plans/pp-miami-air-sea.webp",
+      "pp-miami-space-carl": "/images/entities/possible-plans/pp-miami-space-carl.webp",
+      "pp-miami-space-charlotte": "/images/entities/possible-plans/pp-miami-space-charlotte.webp",
+      "pp-miami-two-friends-liv": "/images/entities/possible-plans/pp-miami-two-friends-liv.webp",
+      "pp-miami-betsy-la-vie": "/images/entities/possible-plans/pp-miami-betsy-la-vie.webp",
+      "pp-miami-betsy-angel": "/images/entities/possible-plans/pp-miami-betsy-angel.webp",
+      "pp-miami-ball-chain": "/images/entities/possible-plans/pp-miami-ball-chain.webp",
+      "pp-miami-lagniappe": "/images/entities/possible-plans/pp-miami-lagniappe.webp",
+      "pp-miami-pamm": "/images/entities/possible-plans/pp-miami-pamm.webp",
+      "pp-miami-ica": "/images/entities/possible-plans/pp-miami-ica.webp",
+      "pp-miami-design-district": "/images/entities/possible-plans/pp-miami-design-district.webp",
+      "pp-miami-mandolin": "/images/entities/possible-plans/pp-miami-mandolin.webp",
+      "pp-miami-zak": "/images/entities/possible-plans/pp-miami-zak.webp",
+      "pp-miami-fairchild": "/images/entities/possible-plans/pp-miami-fairchild.webp",
+      "pp-miami-sweet-liberty": "/images/entities/possible-plans/pp-miami-sweet-liberty.webp",
+      "pp-miami-aventura": "/images/entities/possible-plans/pp-miami-aventura.webp",
+      "pp-keys-robbies": "/images/entities/possible-plans/pp-keys-robbies.webp",
+      "pp-keys-kayak-indian": "/images/entities/possible-plans/pp-keys-kayak-indian.webp",
+      "pp-keys-tasting-history": "/images/entities/possible-plans/pp-keys-tasting-history.webp",
+      "pp-keys-theater-sea": "/images/entities/possible-plans/pp-keys-theater-sea.webp",
+      "pp-keys-square": "/images/entities/possible-plans/pp-keys-square.webp",
+      "pp-keys-morada": "/images/entities/possible-plans/pp-keys-morada.webp",
+      "pp-keys-diving-museum": "/images/entities/possible-plans/pp-keys-diving-museum.webp",
+      "pp-keys-rainbarrel": "/images/entities/possible-plans/pp-keys-rainbarrel.webp",
+      "pp-keys-fkbc": "/images/entities/possible-plans/pp-keys-fkbc.webp",
+      "pp-keys-publix": "/images/entities/possible-plans/pp-keys-publix.webp",
+      "pp-keys-robert-is-here": "/images/entities/possible-plans/pp-keys-robert-is-here.webp"
+    },
+    "alternatives": {
+      "alt-30-tired": "/images/entities/alternatives/alt-30-tired.webp"
+    },
+    "essential-places": {
+      "ep-lodging-miami": "/images/entities/essential-places/ep-lodging-miami.webp",
+      "ep-lodging-islamorada": "/images/entities/essential-places/ep-lodging-islamorada.webp",
+      "ep-airport-mia": "/images/entities/essential-places/ep-airport-mia.webp",
+      "ep-market-miami": "/images/entities/essential-places/ep-market-miami.webp",
+      "ep-pharmacy-miami": "/images/entities/essential-places/ep-pharmacy-miami.webp",
+      "ep-market-keys": "/images/entities/essential-places/ep-market-keys.webp"
+    }
+  },
+  "stats": {
+    "total": 97,
+    "downloaded": 72,
+    "copied": 0,
+    "fallback": 25
+  }
+}

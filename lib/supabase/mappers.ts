@@ -577,3 +577,127 @@ export function rowToAgreement(row: AgreementRow): Agreement {
     order: row.order,
   };
 }
+
+export function familyMemberToRow(member: FamilyMember): FamilyMemberRow {
+  return {
+    id: member.id,
+    name: member.name,
+    short_name: member.shortName,
+    color: member.color,
+  };
+}
+
+export function tripConfigToRow(config: TripConfig): TripConfigRowFull {
+  return {
+    id: "default",
+    destination: config.destination,
+    base_address: config.baseAddress,
+    start_date: config.startDate,
+    end_date: config.endDate,
+    mock_today: config.mockToday,
+  };
+}
+
+export function possiblePlanToRow(plan: PossiblePlan): PossiblePlanRow {
+  return {
+    id: plan.id,
+    title: plan.title,
+    subtitle: plan.subtitle ?? null,
+    description: plan.description,
+    why_go: plan.whyGo ?? null,
+    category: plan.category,
+    periods: plan.periods,
+    neighborhood: plan.neighborhood ?? null,
+    address: plan.address ?? null,
+    estimated_duration_minutes: plan.estimatedDurationMinutes ?? null,
+    price_level: plan.priceLevel ?? null,
+    intensity: plan.intensity,
+    best_for: plan.bestFor,
+    google_maps_url: plan.googleMapsUrl ?? null,
+    apple_maps_url: plan.appleMapsUrl ?? null,
+    website_url: plan.websiteUrl ?? null,
+    ticket_url: plan.ticketUrl ?? null,
+    reservation_url: plan.reservationUrl ?? null,
+    instagram_url: plan.instagramUrl ?? null,
+    uber_url: plan.uberUrl ?? null,
+    tags: plan.tags ?? [],
+    status: plan.status,
+    source: plan.source ?? null,
+    notes: plan.notes ?? null,
+    is_nearby: plan.isNearby ?? false,
+  };
+}
+
+export function nightEventToRow(event: NightEvent): NightEventRow {
+  return {
+    id: event.id,
+    date: event.date,
+    type: event.type,
+    title: event.title,
+    venue: event.venue,
+    neighborhood: event.neighborhood ?? null,
+    start_time: event.startTime,
+    end_time: event.endTime ?? null,
+    price_info: event.priceInfo ?? null,
+    dress_code: event.dressCode ?? null,
+    intensity: event.intensity,
+    buy_ahead: event.buyAhead ?? false,
+    google_maps_url: event.googleMapsUrl ?? null,
+    apple_maps_url: event.appleMapsUrl ?? null,
+    website_url: event.websiteUrl ?? null,
+    ticket_url: event.ticketUrl ?? null,
+    uber_url: event.uberUrl ?? null,
+    status: event.status,
+    notes: event.notes ?? null,
+  };
+}
+
+export function dayAlternativeToRow(
+  alt: DayAlternativePlan
+): DayAlternativeRow {
+  return {
+    id: alt.id,
+    day_id: alt.dayId,
+    trigger: alt.trigger,
+    title: alt.title,
+    description: alt.description,
+    plan_item_ids: alt.planItemIds ?? [],
+  };
+}
+
+export function essentialPlaceToRow(
+  place: EssentialPlace
+): EssentialPlaceRow {
+  return {
+    id: place.id,
+    name: place.name,
+    type: place.type,
+    address: place.address,
+    area: place.area ?? null,
+    base_name: place.baseName ?? null,
+    notes: place.notes ?? null,
+    google_maps_url: place.googleMapsUrl ?? null,
+    apple_maps_url: place.appleMapsUrl ?? null,
+    uber_url: place.uberUrl ?? null,
+  };
+}
+
+export function travelDocumentToRow(
+  doc: TravelDocument
+): TravelDocumentRow {
+  return {
+    id: doc.id,
+    title: doc.title,
+    type: doc.type,
+    url: doc.url ?? null,
+    notes: doc.notes ?? null,
+  };
+}
+
+export function agreementToRow(agreement: Agreement): AgreementRow {
+  return {
+    id: agreement.id,
+    text: agreement.text,
+    order: agreement.order,
+  };
+}

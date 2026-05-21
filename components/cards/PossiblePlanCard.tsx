@@ -1,6 +1,7 @@
 "use client";
 
 import type { PossiblePlan } from "@/types";
+import { EntityImage } from "@/components/ui/EntityImage";
 import {
   POSSIBLE_CATEGORY_LABELS,
   INTENSITY_LABELS,
@@ -19,6 +20,17 @@ interface PossiblePlanCardProps {
 export function PossiblePlanCard({ plan, onAddToItinerary }: PossiblePlanCardProps) {
   return (
     <article className="card flex flex-col overflow-hidden transition hover:shadow-md">
+      <div className="relative aspect-[16/9] w-full">
+        <EntityImage
+          kind="possible-plans"
+          entityId={plan.id}
+          category={plan.category}
+          alt={plan.title}
+          fill
+          className="object-cover"
+          sizes="320px"
+        />
+      </div>
       <div className="gradient-miami h-2" />
       <div className="flex flex-1 flex-col p-4">
         <div className="flex flex-wrap gap-1">

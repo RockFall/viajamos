@@ -1,6 +1,7 @@
 "use client";
 
 import type { ItineraryEvent } from "@/types";
+import { EntityImage } from "@/components/ui/EntityImage";
 import { STATUS_LABELS, CATEGORY_LABELS } from "@/lib/labels";
 import { CategoryIcon } from "@/components/ui/EventIcons";
 import { FamilyAvatars } from "@/components/ui/FamilyAvatars";
@@ -31,10 +32,23 @@ export function EventCard({
 
   return (
     <div
-      className={`rounded-[20px] bg-card/90 p-4 ring-1 ring-border ${
+      className={`overflow-hidden rounded-[20px] bg-card/90 ring-1 ring-border ${
         isCancelled ? "opacity-60" : ""
       }`}
     >
+      <div className="relative aspect-[21/9] w-full">
+        <EntityImage
+          kind="itinerary-events"
+          entityId={event.id}
+          category={event.category}
+          alt={event.title}
+          fill
+          className="object-cover"
+          sizes="512px"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+      </div>
+      <div className="p-4">
       <div className="flex items-start gap-3">
         {event.startTime && (
           <div className="w-14 shrink-0 text-right">
@@ -125,6 +139,7 @@ export function EventCard({
         compact
         className="mt-4"
       />
+      </div>
     </div>
   );
 }

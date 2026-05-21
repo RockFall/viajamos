@@ -18,8 +18,14 @@ import type {
   TripTask,
 } from "@/types";
 import {
+  agreementToRow,
+  dayAlternativeToRow,
+  essentialPlaceToRow,
+  familyMemberToRow,
   itineraryEventToRow,
   memoryToRow,
+  nightEventToRow,
+  possiblePlanToRow,
   rowToAgreement,
   rowToChecklist,
   rowToDayAlternative,
@@ -38,6 +44,8 @@ import {
   tripTaskToRow,
   flightToRow,
   travelTimelineToRow,
+  travelDocumentToRow,
+  tripConfigToRow,
   checklistToRow,
   tripDayToRow,
   type AgreementRow,
@@ -337,4 +345,176 @@ export async function upsertChecklist(
     .from("checklists")
     .upsert(checklistToRow(checklist));
   if (error) console.warn("Failed to upsert checklist:", error.message);
+}
+
+export async function deleteChecklist(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("checklists").delete().eq("id", id);
+  if (error) console.warn("Failed to delete checklist:", error.message);
+}
+
+export async function upsertFamilyMember(
+  client: SupabaseClient,
+  member: FamilyMember
+): Promise<void> {
+  const { error } = await client
+    .from("family_members")
+    .upsert(familyMemberToRow(member));
+  if (error) console.warn("Failed to upsert family member:", error.message);
+}
+
+export async function deleteFamilyMember(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("family_members").delete().eq("id", id);
+  if (error) console.warn("Failed to delete family member:", error.message);
+}
+
+export async function upsertTripConfig(
+  client: SupabaseClient,
+  config: TripConfig
+): Promise<void> {
+  const { error } = await client
+    .from("trip_config")
+    .upsert(tripConfigToRow(config));
+  if (error) console.warn("Failed to upsert trip config:", error.message);
+}
+
+export async function deleteTripDay(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("trip_days").delete().eq("id", id);
+  if (error) console.warn("Failed to delete trip day:", error.message);
+}
+
+export async function upsertPossiblePlan(
+  client: SupabaseClient,
+  plan: PossiblePlan
+): Promise<void> {
+  const { error } = await client
+    .from("possible_plans")
+    .upsert(possiblePlanToRow(plan));
+  if (error) console.warn("Failed to upsert possible plan:", error.message);
+}
+
+export async function deletePossiblePlan(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("possible_plans").delete().eq("id", id);
+  if (error) console.warn("Failed to delete possible plan:", error.message);
+}
+
+export async function upsertNightEvent(
+  client: SupabaseClient,
+  event: NightEvent
+): Promise<void> {
+  const { error } = await client
+    .from("night_events")
+    .upsert(nightEventToRow(event));
+  if (error) console.warn("Failed to upsert night event:", error.message);
+}
+
+export async function deleteNightEvent(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("night_events").delete().eq("id", id);
+  if (error) console.warn("Failed to delete night event:", error.message);
+}
+
+export async function upsertDayAlternative(
+  client: SupabaseClient,
+  alt: DayAlternativePlan
+): Promise<void> {
+  const { error } = await client
+    .from("day_alternative_plans")
+    .upsert(dayAlternativeToRow(alt));
+  if (error) console.warn("Failed to upsert day alternative:", error.message);
+}
+
+export async function deleteDayAlternative(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client
+    .from("day_alternative_plans")
+    .delete()
+    .eq("id", id);
+  if (error)
+    console.warn("Failed to delete day alternative:", error.message);
+}
+
+export async function upsertEssentialPlace(
+  client: SupabaseClient,
+  place: EssentialPlace
+): Promise<void> {
+  const { error } = await client
+    .from("essential_places")
+    .upsert(essentialPlaceToRow(place));
+  if (error) console.warn("Failed to upsert essential place:", error.message);
+}
+
+export async function deleteEssentialPlace(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("essential_places").delete().eq("id", id);
+  if (error) console.warn("Failed to delete essential place:", error.message);
+}
+
+export async function upsertTravelDocument(
+  client: SupabaseClient,
+  doc: TravelDocument
+): Promise<void> {
+  const { error } = await client
+    .from("travel_documents")
+    .upsert(travelDocumentToRow(doc));
+  if (error) console.warn("Failed to upsert travel document:", error.message);
+}
+
+export async function deleteTravelDocument(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("travel_documents").delete().eq("id", id);
+  if (error) console.warn("Failed to delete travel document:", error.message);
+}
+
+export async function deleteTripTask(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("trip_tasks").delete().eq("id", id);
+  if (error) console.warn("Failed to delete trip task:", error.message);
+}
+
+export async function upsertAgreement(
+  client: SupabaseClient,
+  agreement: Agreement
+): Promise<void> {
+  const { error } = await client
+    .from("agreements")
+    .upsert(agreementToRow(agreement));
+  if (error) console.warn("Failed to upsert agreement:", error.message);
+}
+
+export async function deleteAgreement(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("agreements").delete().eq("id", id);
+  if (error) console.warn("Failed to delete agreement:", error.message);
+}
+
+export async function deleteMemory(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client.from("memories").delete().eq("id", id);
+  if (error) console.warn("Failed to delete memory:", error.message);
 }

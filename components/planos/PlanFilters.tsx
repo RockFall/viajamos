@@ -16,13 +16,11 @@ import type { BestFor } from "@/types";
 
 const BEST_FOR_OPTIONS: { value: BestFor; label: string }[] = [
   { value: "everyone", label: "Todos" },
-  { value: "family", label: "Família" },
+  { value: "family", label: "FF" },
   { value: "caio", label: "C" },
   { value: "geovanin", label: "G" },
   { value: "adelaide", label: "A" },
   { value: "sofia", label: "S" },
-  { value: "adults", label: "GP" },
-  { value: "caio_sofia", label: "C+S" },
 ];
 
 interface PlanFiltersProps {

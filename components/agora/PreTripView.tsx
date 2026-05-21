@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { EntityImage } from "@/components/ui/EntityImage";
 import { useTrip } from "@/context/TripProvider";
 import { getFamilyInitial } from "@/lib/family-initials";
 import { getCountdownParts } from "@/lib/trip-phase";
@@ -237,8 +238,10 @@ export function PreTripView({ selectedDate, dateRail }: PreTripViewProps) {
         {firstNightEvent && (
           <section className="relative overflow-hidden rounded-[28px] bg-card ring-1 ring-border">
             <div className="relative aspect-[16/9] w-full">
-              <Image
-                src="/images/dinner-mandolin.jpg"
+              <EntityImage
+                kind="itinerary-events"
+                entityId={firstNightEvent.id}
+                category={firstNightEvent.category}
                 alt={firstNightEvent.title}
                 fill
                 className="object-cover"

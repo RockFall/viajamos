@@ -1,6 +1,7 @@
 "use client";
 
 import type { PossiblePlan } from "@/types";
+import { EntityImage } from "@/components/ui/EntityImage";
 import { PlanCategoryIcon } from "@/components/ui/PlanIcons";
 import { QuickActions } from "@/components/ui/QuickActions";
 import {
@@ -44,9 +45,23 @@ export function PlanIdeaCard({
   return (
     <article
       className={`flex h-full min-w-0 flex-col overflow-hidden rounded-[20px] bg-card ring-1 ring-border shadow-[0_12px_28px_-18px_rgba(60,30,20,0.2)] ${
-        isFeatured ? "w-full p-5" : "min-w-0 p-3.5"
+        isFeatured ? "w-full" : "min-w-0"
       }`}
     >
+      <div className={`relative w-full ${isFeatured ? "aspect-[16/10]" : "aspect-[4/3]"}`}>
+        <EntityImage
+          kind="possible-plans"
+          entityId={plan.id}
+          category={plan.category}
+          alt={plan.title}
+          fill
+          className="object-cover"
+          sizes={isFeatured ? "280px" : "160px"}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-warm-black/35 to-transparent" />
+      </div>
+
+      <div className={`flex min-h-0 flex-1 flex-col ${isFeatured ? "p-5" : "p-3.5"}`}>
       <div className="flex items-start justify-between gap-2">
         <div
           className={`grid shrink-0 place-items-center rounded-xl bg-sand-100 text-terracotta ${
@@ -149,6 +164,7 @@ export function PlanIdeaCard({
         >
           Virar evento
         </button>
+      </div>
       </div>
     </article>
   );

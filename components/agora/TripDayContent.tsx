@@ -62,6 +62,8 @@ export function TripDayContent({
         theme={dayInfo?.theme ?? "Miami + Islamorada"}
         weatherDate={selectedDate}
         weatherArea={weatherAreaFromTripDay(dayInfo?.area)}
+        dayId={dayInfo?.id}
+        dayArea={dayInfo?.area}
         dateRail={dateRail}
       />
       <LocationStrip

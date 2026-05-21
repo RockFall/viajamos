@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useTrip } from "@/context/TripProvider";
 import {
   ESSENTIAL_TYPE_LABELS,
@@ -8,6 +9,7 @@ import {
   CHECKLIST_TYPE_LABELS,
   PRIORITY_LABELS,
 } from "@/lib/labels";
+import { tableHref } from "@/components/settings/SettingsHub";
 import { QuickActions } from "@/components/ui/QuickActions";
 import {
   MapPin,
@@ -19,9 +21,10 @@ import {
   Download,
   Settings,
   ChevronRight,
+  AlertTriangle,
   Pencil,
 } from "lucide-react";
-import { TripContentEditor } from "@/components/settings/TripContentEditor";
+import type { TableId } from "@/lib/settings/table-registry";
 
 type Section =
   | "menu"
@@ -30,18 +33,53 @@ type Section =
   | "checklists"
   | "tasks"
   | "agreements"
-  | "memories"
-  | "settings";
+  | "memories";
 
-const menuItems: { id: Section; label: string; icon: React.ElementType }[] = [
-  { id: "addresses", label: "Endereços essenciais", icon: MapPin },
-  { id: "documents", label: "Documentos e links", icon: FileText },
-  { id: "checklists", label: "Checklists", icon: CheckSquare },
-  { id: "tasks", label: "Pendências", icon: ListTodo },
-  { id: "agreements", label: "Combinados importantes", icon: Handshake },
-  { id: "memories", label: "Memórias", icon: BookHeart },
-  { id: "settings", label: "Configurações", icon: Settings },
+const menuItems: {
+  id: Section;
+  label: string;
+  icon: React.ElementType;
+  adminTable?: TableId;
+}[] = [
+  {
+    id: "addresses",
+    label: "Endereços essenciais",
+    icon: MapPin,
+    adminTable: "essential_places",
+  },
+  {
+    id: "documents",
+    label: "Documentos e links",
+    icon: FileText,
+    adminTable: "travel_documents",
+  },
+  {
+    id: "checklists",
+    label: "Checklists",
+    icon: CheckSquare,
+    adminTable: "trip_content",
+  },
+  { id: "tasks", label: "Pendências", icon: ListTodo, adminTable: "trip_tasks" },
+  {
+    id: "agreements",
+    label: "Combinados importantes",
+    icon: Handshake,
+    adminTable: "agreements",
+  },
+  { id: "memories", label: "Memórias", icon: BookHeart, adminTable: "memories" },
 ];
+
+function ManageLink({ table }: { table: TableId }) {
+  return (
+    <Link
+      href={tableHref(table)}
+      className="inline-flex items-center gap-1.5 rounded-xl border border-terracotta/30 bg-terracotta/5 px-3 py-2 text-sm font-medium text-terracotta"
+    >
+      <Pencil size={14} />
+      Gerenciar no admin
+    </Link>
+  );
+}
 
 export default function MaisPage() {
   const {
@@ -52,19 +90,12 @@ export default function MaisPage() {
     memories,
     updateMemory,
     exportState,
-    today,
-    realToday,
-    isDateSimulated,
-    setMockToday,
-    resetToday,
-    tripDays,
-    config,
     essentialPlaces,
     travelDocuments,
     checklists,
     agreements,
+    tripDays,
     dataSource,
-    isHydrated,
   } = useTrip();
   const [section, setSection] = useState<Section>("menu");
 
@@ -78,6 +109,8 @@ export default function MaisPage() {
     URL.revokeObjectURL(url);
   };
 
+  const currentMenu = menuItems.find((m) => m.id === section);
+
   if (section !== "menu") {
     return (
       <div className="space-y-4 pb-4">
@@ -88,6 +121,10 @@ export default function MaisPage() {
         >
           ← Voltar
         </button>
+
+        {currentMenu?.adminTable && (
+          <ManageLink table={currentMenu.adminTable} />
+        )}
 
         {section === "addresses" && (
           <>
@@ -280,85 +317,6 @@ export default function MaisPage() {
             })}
           </>
         )}
-
-        {section === "settings" && (
-          <>
-            <h1 className="text-xl font-bold">Configurações</h1>
-
-            <div className="card border-terracotta/20 p-4">
-              <div className="mb-3 flex items-center gap-2">
-                <Pencil size={18} className="text-terracotta" />
-                <h2 className="font-semibold">Editor de conteúdo</h2>
-              </div>
-              <TripContentEditor />
-            </div>
-
-            <div className="card p-4 space-y-3">
-              <h2 className="text-sm font-semibold">App</h2>
-              <p className="text-xs text-muted-foreground">
-                Fonte de dados:{" "}
-                <span className="font-semibold text-terracotta">
-                  {dataSource === "supabase" ? "Supabase (ao vivo)" : "JSON local (fallback)"}
-                </span>
-              </p>
-              <div>
-                <label className="text-sm font-medium">Data de hoje</label>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {realToday.slice(8, 10)}/{realToday.slice(5, 7)}/
-                  {realToday.slice(0, 4)}
-                  {isDateSimulated && (
-                    <span className="text-terracotta">
-                      {" "}
-                      · simulando {today.slice(8, 10)}/{today.slice(5, 7)}
-                    </span>
-                  )}
-                </p>
-              </div>
-              <div>
-                <label className="text-sm font-medium">
-                  Simular outro dia (demo)
-                </label>
-                <p className="mb-2 text-xs text-muted-foreground">
-                  Para testar pré-viagem, dia de voo ou roteiro em outra data
-                </p>
-                <select
-                  value={today}
-                  onChange={(e) => {
-                    const next = e.target.value;
-                    if (next === realToday) resetToday();
-                    else setMockToday(next);
-                  }}
-                  className="w-full rounded-xl border px-3 py-2 text-sm"
-                >
-                  <option value={realToday}>
-                    Hoje ({realToday.slice(8, 10)}/{realToday.slice(5, 7)})
-                  </option>
-                  {[config.startDate, config.endDate]
-                    .filter((d) => !tripDays.some((td) => td.date === d))
-                    .map((date) => (
-                      <option key={date} value={date}>
-                        {date.slice(8, 10)}/{date.slice(5, 7)} — especial
-                      </option>
-                    ))}
-                  {tripDays.map((d) => (
-                    <option key={d.id} value={d.date}>
-                      {d.date.slice(8, 10)}/{d.date.slice(5, 7)} — {d.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {isDateSimulated && (
-                <button
-                  type="button"
-                  onClick={resetToday}
-                  className="w-full rounded-xl bg-secondary py-2 text-sm font-medium text-warm-black ring-1 ring-border"
-                >
-                  Voltar para a data real
-                </button>
-              )}
-            </div>
-          </>
-        )}
       </div>
     );
   }
@@ -369,6 +327,19 @@ export default function MaisPage() {
         <h1 className="text-2xl font-bold text-ocean">Mais</h1>
         <p className="text-sm text-muted">Utilidades da viagem</p>
       </header>
+
+      {dataSource === "fallback" && (
+        <div className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+          <AlertTriangle size={18} className="mt-0.5 shrink-0" />
+          <p>
+            Dados locais (JSON). Abra{" "}
+            <Link href="/mais/configuracoes" className="font-medium underline">
+              Configurações
+            </Link>{" "}
+            após conectar o Supabase para editar na nuvem.
+          </p>
+        </div>
+      )}
 
       <ul className="space-y-2">
         {menuItems.map(({ id, label, icon: Icon }) => (
@@ -386,6 +357,18 @@ export default function MaisPage() {
             </button>
           </li>
         ))}
+        <li>
+          <Link
+            href="/mais/configuracoes"
+            className="card flex w-full items-center justify-between border-terracotta/20 p-4 transition hover:shadow-md"
+          >
+            <span className="flex items-center gap-3">
+              <Settings size={20} className="text-terracotta" />
+              <span className="font-medium">Configurações</span>
+            </span>
+            <ChevronRight size={18} className="text-muted" />
+          </Link>
+        </li>
       </ul>
 
       <button
