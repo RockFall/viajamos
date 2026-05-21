@@ -48,12 +48,12 @@ export function PlanosGallery({
             left="Destaques"
             right={`${featured.length} ideias`}
           />
-          <div className="-mx-6 mt-4 min-w-0 overflow-x-auto overscroll-x-contain px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex snap-x snap-mandatory gap-3 pb-1">
+          <div className="mt-4 min-w-0 max-w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex snap-x snap-mandatory gap-3 px-1 pb-1">
               {featured.map((plan) => (
                 <div
                   key={plan.id}
-                  className="w-[min(18rem,calc(100vw-3rem))] shrink-0 snap-start"
+                  className="w-[17.5rem] max-w-[calc(100%-0.5rem)] shrink-0 snap-start"
                 >
                   <PlanIdeaCard
                     plan={plan}

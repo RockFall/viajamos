@@ -54,14 +54,14 @@ export default function PlanosPage() {
 
   if (!isHydrated) {
     return (
-      <div className="miami-gradient -mx-4 -mt-4 flex min-h-screen w-full max-w-full items-center justify-center overflow-x-hidden pb-36 text-muted-foreground">
+      <div className="miami-gradient -mx-4 -mt-4 flex min-h-screen min-w-0 items-center justify-center pb-36 text-muted-foreground">
         <p className="text-sm">Carregando planos…</p>
       </div>
     );
   }
 
   return (
-    <div className="miami-gradient -mx-4 -mt-4 min-h-screen w-full max-w-full overflow-x-hidden pb-36 text-warm-black">
+    <div className="miami-gradient -mx-4 -mt-4 min-h-screen min-w-0 pb-36 text-warm-black">
       <PlanosHeader ideaCount={activePlans.length} />
 
       <main className="mx-auto mt-6 w-full min-w-0 max-w-[48ch] space-y-8 px-6">

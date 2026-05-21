@@ -16,7 +16,7 @@ export function PlanosHeader({ ideaCount }: PlanosHeaderProps) {
           fill
           priority
           className="object-cover"
-          sizes="100vw"
+          sizes="(max-width: 512px) 100%, 512px"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/15 to-background" />
       </div>

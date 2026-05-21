@@ -60,7 +60,7 @@ export function PlanFilters({
         <p className="mb-2 px-1 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
           Categoria
         </p>
-        <div className="-mx-6 min-w-0 overflow-x-auto overscroll-x-contain px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="min-w-0 max-w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex w-max gap-2 pr-1">
             <button
               type="button"
@@ -94,7 +94,8 @@ export function PlanFilters({
         <p className="mb-2 px-1 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
           Intensidade
         </p>
-        <div className="flex gap-2">
+        <div className="min-w-0 max-w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex w-max gap-2 pr-1">
           <button
             type="button"
             title="Qualquer intensidade"
@@ -119,6 +120,7 @@ export function PlanFilters({
               <IntensityIcon intensity={level} size={18} strokeWidth={2} />
             </button>
           ))}
+          </div>
         </div>
       </div>
 
@@ -126,7 +128,7 @@ export function PlanFilters({
         <p className="mb-2 px-1 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
           Melhor para
         </p>
-        <div className="-mx-6 min-w-0 overflow-x-auto overscroll-x-contain px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="min-w-0 max-w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex w-max gap-2 pr-1">
             <button
               type="button"
