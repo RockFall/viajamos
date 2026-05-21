@@ -8,7 +8,7 @@ export function LocationStrip({
   travelerCount,
 }: LocationStripProps) {
   return (
-    <div className="relative z-10 -mt-6 px-6">
+    <div className="relative z-10 -mt-3 px-6">
       <div className="flex items-center justify-between rounded-2xl bg-card/90 px-4 py-3 shadow-[0_10px_30px_-15px_rgba(60,30,20,0.15)] ring-1 ring-border backdrop-blur-md">
         <div className="flex min-w-0 items-center gap-3">
           <span className="size-1.5 shrink-0 animate-pulse rounded-full bg-terracotta" />

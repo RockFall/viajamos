@@ -1,7 +1,7 @@
 "use client";
 
 import type { FamilyMember, ItineraryEvent } from "@/types";
-import { FAMILY_INITIALS } from "@/lib/family-initials";
+import { getFamilyInitial } from "@/lib/family-initials";
 import { SectionLabel } from "./SectionLabel";
 
 type RowTone = "default" | "accent" | "muted";
@@ -48,7 +48,7 @@ function PersonRow({
     >
       <div className="flex min-w-0 items-center gap-3">
         <div className="grid size-10 shrink-0 place-items-center rounded-full bg-sand-200 font-serif text-base italic text-warm-black ring-2 ring-card">
-          {FAMILY_INITIALS[member.id]}
+          {getFamilyInitial(member)}
         </div>
         <div className="min-w-0">
           <p className="text-sm font-semibold tracking-tight">

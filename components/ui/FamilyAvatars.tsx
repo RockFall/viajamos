@@ -1,7 +1,7 @@
 "use client";
 
 import { useTrip } from "@/context/TripProvider";
-import { FAMILY_INITIALS } from "@/lib/family-initials";
+import { getFamilyInitial } from "@/lib/family-initials";
 import type { FamilyMemberId } from "@/types";
 
 interface FamilyAvatarsProps {
@@ -37,7 +37,7 @@ export function FamilyAvatars({
             title={member.name}
             className={`grid place-items-center rounded-full bg-sand-200 font-serif italic text-warm-black ${SIZES[size]} ${ringClass}`}
           >
-            {FAMILY_INITIALS[id]}
+            {getFamilyInitial(member)}
           </span>
         );
       })}

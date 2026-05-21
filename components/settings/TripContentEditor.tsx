@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTrip } from "@/context/TripProvider";
 import { generateId } from "@/lib/itinerary";
 import { getTripPhase } from "@/lib/trip-phase";
@@ -96,8 +96,14 @@ export function TripContentEditor() {
   );
   const isFlightDay = phase === "travel";
 
-  const dayFlights = flights.filter((f) => f.date === selectedDate);
-  const dayTimeline = travelTimeline.filter((t) => t.date === selectedDate);
+  const dayFlights = useMemo(
+    () => flights.filter((f) => f.date === selectedDate),
+    [flights, selectedDate]
+  );
+  const dayTimeline = useMemo(
+    () => travelTimeline.filter((t) => t.date === selectedDate),
+    [travelTimeline, selectedDate]
+  );
 
   const [dayDraft, setDayDraft] = useState<Partial<TripDay>>({});
   const [sharedFlight, setSharedFlight] = useState({
@@ -121,7 +127,7 @@ export function TripContentEditor() {
     setTimeout(() => setSavedFlash(null), 2000);
   };
 
-  const syncDraftsFromData = useCallback(() => {
+  useEffect(() => {
     if (dayInfo) {
       setDayDraft({
         title: dayInfo.title,
@@ -158,17 +164,13 @@ export function TripContentEditor() {
         status: "pending",
       });
     }
-    const seats: Record<string, string> = {};
+    const seats: Partial<Record<FamilyMemberId, string>> = {};
     for (const m of family) {
       const f = dayFlights.find((fl) => fl.passengerId === m.id);
       seats[m.id] = f?.seat ?? "";
     }
-    setSeatDrafts(seats as Record<FamilyMemberId, string>);
-  }, [dayInfo, dayFlights, family]);
-
-  useEffect(() => {
-    syncDraftsFromData();
-  }, [selectedDate, syncDraftsFromData]);
+    setSeatDrafts(seats);
+  }, [selectedDate, dayInfo, dayFlights, family]);
 
   const saveDayInfo = () => {
     if (!dayInfo) return;
@@ -463,11 +465,34 @@ function TimelineSection({
   onDelete: (id: string) => void;
   onFlash: (msg: string) => void;
 }) {
-  const [drafts, setDrafts] = useState<TravelTimelineItem[]>([]);
+  return (
+    <TimelineSectionEditor
+      key={date}
+      date={date}
+      items={items}
+      onSave={onSave}
+      onDelete={onDelete}
+      onFlash={onFlash}
+    />
+  );
+}
 
-  useEffect(() => {
-    setDrafts(items.map((i) => ({ ...i })));
-  }, [date, items]);
+function TimelineSectionEditor({
+  date,
+  items,
+  onSave,
+  onDelete,
+  onFlash,
+}: {
+  date: string;
+  items: TravelTimelineItem[];
+  onSave: (item: TravelTimelineItem) => void;
+  onDelete: (id: string) => void;
+  onFlash: (msg: string) => void;
+}) {
+  const [drafts, setDrafts] = useState<TravelTimelineItem[]>(() =>
+    items.map((i) => ({ ...i }))
+  );
 
   const addItem = () => {
     const item: TravelTimelineItem = {
@@ -590,13 +615,29 @@ function ChecklistSection({
   sectionTitle: string;
   onSave: (c: Checklist) => void;
 }) {
-  const [items, setItems] = useState<ChecklistItem[]>(checklist.items);
-  const [title, setTitle] = useState(checklist.title);
+  return (
+    <ChecklistSectionEditor
+      key={checklist.id}
+      checklist={checklist}
+      sectionTitle={sectionTitle}
+      onSave={onSave}
+    />
+  );
+}
 
-  useEffect(() => {
-    setItems(checklist.items.map((i) => ({ ...i })));
-    setTitle(checklist.title);
-  }, [checklist.id, checklist.items, checklist.title]);
+function ChecklistSectionEditor({
+  checklist,
+  sectionTitle,
+  onSave,
+}: {
+  checklist: Checklist;
+  sectionTitle: string;
+  onSave: (c: Checklist) => void;
+}) {
+  const [items, setItems] = useState<ChecklistItem[]>(() =>
+    checklist.items.map((i) => ({ ...i }))
+  );
+  const [title, setTitle] = useState(checklist.title);
 
   const addItem = () => {
     setItems((list) => [

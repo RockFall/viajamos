@@ -31,7 +31,7 @@ export function IntegratedDateRail({
 
   return (
     <div
-      className={`flex items-center gap-1 ${
+      className={`flex w-full items-center gap-1 ${
         dark ? "text-sand-50" : "text-warm-black"
       }`}
       role="group"

@@ -14,6 +14,7 @@ import {
   getNextEventForPerson,
 } from "@/lib/itinerary";
 import { getTomorrow } from "@/lib/dates";
+import { weatherAreaFromTripDay } from "@/lib/weather";
 import type { FamilyMemberId } from "@/types";
 
 interface TripDayContentProps {
@@ -58,9 +59,9 @@ export function TripDayContent({
   return (
     <>
       <AgoraHero
-        date={selectedDate}
         theme={dayInfo?.theme ?? "Miami + Islamorada"}
-        weather={dayInfo?.weather}
+        weatherDate={selectedDate}
+        weatherArea={weatherAreaFromTripDay(dayInfo?.area)}
         dateRail={dateRail}
       />
       <LocationStrip

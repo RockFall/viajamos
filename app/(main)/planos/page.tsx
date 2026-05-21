@@ -1,15 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useTrip } from "@/context/TripProvider";
-import { PossiblePlanCard } from "@/components/cards/PossiblePlanCard";
-import { FilterBar } from "@/components/forms/FilterBar";
 import { AddToItineraryModal } from "@/components/forms/AddToItineraryModal";
-import {
-  POSSIBLE_CATEGORY_LABELS,
-  INTENSITY_LABELS,
-  BEST_FOR_LABELS,
-} from "@/lib/labels";
+import { PlanosHeader } from "@/components/planos/PlanosHeader";
+import { PlanFilters } from "@/components/planos/PlanFilters";
+import { PlanosGallery } from "@/components/planos/PlanosGallery";
 import type { PossiblePlan, BestFor } from "@/types";
 
 export default function PlanosPage() {
@@ -21,114 +17,72 @@ export default function PlanosPage() {
   const [selectedPlan, setSelectedPlan] = useState<PossiblePlan | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
+  const activePlans = useMemo(
+    () => possiblePlans.filter((p) => p.status !== "discarded"),
+    [possiblePlans]
+  );
+
   const filtered = useMemo(() => {
-    return possiblePlans.filter((p) => {
+    return activePlans.filter((p) => {
       if (category && p.category !== category) return false;
       if (intensity && p.intensity !== intensity) return false;
       if (bestFor && !p.bestFor.includes(bestFor as BestFor)) return false;
       if (nearbyOnly && !p.isNearby) return false;
-      return p.status !== "discarded";
+      return true;
     });
-  }, [possiblePlans, category, intensity, bestFor, nearbyOnly]);
+  }, [activePlans, category, intensity, bestFor, nearbyOnly]);
 
-  const nearbyPlans = possiblePlans.filter((p) => p.isNearby);
+  const featured = useMemo(
+    () =>
+      filtered.filter(
+        (p) => p.status === "shortlisted" || p.isNearby
+      ),
+    [filtered]
+  );
 
-  const categoryOptions = Object.entries(POSSIBLE_CATEGORY_LABELS).map(
-    ([value, label]) => ({ value, label })
-  );
-  const intensityOptions = Object.entries(INTENSITY_LABELS).map(
-    ([value, label]) => ({ value, label })
-  );
-  const bestForOptions = Object.entries(BEST_FOR_LABELS).map(
-    ([value, label]) => ({ value, label })
-  );
+  const clearFilters = useCallback(() => {
+    setCategory("");
+    setIntensity("");
+    setBestFor("");
+    setNearbyOnly(false);
+  }, []);
+
+  const openModal = (plan: PossiblePlan) => {
+    setSelectedPlan(plan);
+    setModalOpen(true);
+  };
 
   if (!isHydrated) {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center text-muted-foreground">
+      <div className="miami-gradient -mx-4 -mt-4 flex min-h-screen w-full max-w-full items-center justify-center overflow-x-hidden pb-36 text-muted-foreground">
         <p className="text-sm">Carregando planos…</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 pb-4">
-      <header>
-        <h1 className="text-2xl font-bold text-ocean">Possíveis Planos</h1>
-        <p className="text-sm text-muted">
-          Curadoria Miami — transforme ideias em roteiro
-        </p>
-      </header>
+    <div className="miami-gradient -mx-4 -mt-4 min-h-screen w-full max-w-full overflow-x-hidden pb-36 text-warm-black">
+      <PlanosHeader ideaCount={activePlans.length} />
 
-      <FilterBar
-        label="Categoria"
-        options={categoryOptions}
-        value={category}
-        onChange={setCategory}
-      />
-      <FilterBar
-        label="Intensidade"
-        options={intensityOptions}
-        value={intensity}
-        onChange={setIntensity}
-      />
-      <FilterBar
-        label="Melhor para"
-        options={bestForOptions}
-        value={bestFor}
-        onChange={setBestFor}
-      />
-
-      <label className="flex items-center gap-2 text-sm">
-        <input
-          type="checkbox"
-          checked={nearbyOnly}
-          onChange={(e) => setNearbyOnly(e.target.checked)}
-          className="accent-terracotta"
+      <main className="mx-auto mt-6 w-full min-w-0 max-w-[48ch] space-y-8 px-6">
+        <PlanFilters
+          category={category}
+          intensity={intensity}
+          bestFor={bestFor}
+          nearbyOnly={nearbyOnly}
+          onCategoryChange={setCategory}
+          onIntensityChange={setIntensity}
+          onBestForChange={setBestFor}
+          onNearbyOnlyChange={setNearbyOnly}
         />
-        Só perto da base
-      </label>
 
-      {nearbyPlans.length > 0 && !nearbyOnly && (
-        <section>
-          <h2 className="mb-3 text-sm font-semibold text-teal-dark">
-            Perto de casa ({nearbyPlans.length})
-          </h2>
-          <div className="space-y-3">
-            {nearbyPlans
-              .filter((p) => p.status !== "discarded")
-              .slice(0, 3)
-              .map((plan) => (
-                <PossiblePlanCard
-                  key={plan.id}
-                  plan={plan}
-                  onAddToItinerary={() => {
-                    setSelectedPlan(plan);
-                    setModalOpen(true);
-                  }}
-                />
-              ))}
-          </div>
-        </section>
-      )}
-
-      <section>
-        <h2 className="mb-3 text-sm font-semibold">
-          Todos ({filtered.length})
-        </h2>
-        <div className="space-y-3">
-          {filtered.map((plan) => (
-            <PossiblePlanCard
-              key={plan.id}
-              plan={plan}
-              onAddToItinerary={() => {
-                setSelectedPlan(plan);
-                setModalOpen(true);
-              }}
-            />
-          ))}
-        </div>
-      </section>
+        <PlanosGallery
+          featured={featured}
+          rest={filtered}
+          onAddToItinerary={openModal}
+          onClearFilters={clearFilters}
+        />
+      </main>
 
       <AddToItineraryModal
         open={modalOpen}

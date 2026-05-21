@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { useTrip } from "@/context/TripProvider";
-import { FAMILY_INITIALS } from "@/lib/family-initials";
+import { getFamilyInitial } from "@/lib/family-initials";
 import { getCountdownParts } from "@/lib/trip-phase";
 import { AgoraHero } from "./AgoraHero";
 import { SectionLabel } from "./SectionLabel";
@@ -91,12 +91,13 @@ export function PreTripView({ selectedDate, dateRail }: PreTripViewProps) {
   return (
     <>
       <AgoraHero
-        date={selectedDate}
         theme={
           days <= 1
             ? "Quase embarcando"
             : "Miami à vista"
         }
+        weatherDate={selectedDate}
+        weatherArea="Miami"
         eyebrow={dateRail ? undefined : "Contagem regressiva"}
         dateRail={dateRail}
       />
@@ -208,7 +209,7 @@ export function PreTripView({ selectedDate, dateRail }: PreTripViewProps) {
               >
                 <div className="flex items-center gap-3">
                   <div className="grid size-9 place-items-center rounded-full bg-sand-200 font-serif text-base italic text-warm-black ring-2 ring-card">
-                    {FAMILY_INITIALS[member.id]}
+                    {getFamilyInitial(member)}
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold tracking-tight">

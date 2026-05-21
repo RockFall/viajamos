@@ -1,9 +1,17 @@
-import type { FamilyMemberId } from "@/types";
+import type { FamilyMember, FamilyMemberId } from "@/types";
 
-/** Iniciais no estilo Lovable (C, P, M, I) */
+/** Primeira letra do nome curto (ex.: Caio → C, Sofia → S) */
+export function getFamilyInitial(
+  member: Pick<FamilyMember, "shortName" | "name">
+): string {
+  const label = (member.shortName || member.name).trim();
+  return label.charAt(0).toUpperCase();
+}
+
+/** Fallback quando só há o id (ex.: filtros estáticos) */
 export const FAMILY_INITIALS: Record<FamilyMemberId, string> = {
   caio: "C",
-  geovanin: "P",
-  adelaide: "M",
-  sofia: "I",
+  geovanin: "G",
+  adelaide: "A",
+  sofia: "S",
 };
