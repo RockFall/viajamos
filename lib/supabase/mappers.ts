@@ -1,10 +1,27 @@
 import type {
+  Agreement,
+  Checklist,
+  ChecklistItem,
+  DayAlternativePlan,
+  EssentialPlace,
+  FamilyMember,
   FamilyMemberId,
+  Flight,
   ItineraryEvent,
   Memory,
+  NightEvent,
+  PossiblePlan,
   PossiblePlanStatus,
+  TravelDocument,
+  TravelTimelineItem,
+  TripConfig,
+  TripDay,
   TripTask,
 } from "@/types";
+
+function dateOnly(value: string): string {
+  return value.slice(0, 10);
+}
 
 export interface ItineraryEventRow {
   id: string;
@@ -175,5 +192,388 @@ export function memoryToRow(memory: Memory): MemoryRow {
     rating: memory.rating ?? null,
     notes: memory.notes ?? null,
     photo_url: memory.photoUrl ?? null,
+  };
+}
+
+// --- Static / reference tables ---
+
+export interface FamilyMemberRow {
+  id: string;
+  name: string;
+  short_name: string;
+  color: string;
+}
+
+export interface TripConfigRowFull {
+  id: string;
+  destination: string;
+  base_address: string;
+  start_date: string;
+  end_date: string;
+  mock_today: string;
+}
+
+export interface TripDayRow {
+  id: string;
+  date: string;
+  title: string;
+  theme: string;
+  area: string | null;
+  base_name: string | null;
+  base_address: string | null;
+  weather: string | null;
+  is_travel_day: boolean;
+  is_return_day: boolean;
+}
+
+export interface PossiblePlanRow {
+  id: string;
+  title: string;
+  subtitle: string | null;
+  description: string;
+  why_go: string | null;
+  category: PossiblePlan["category"];
+  periods: PossiblePlan["periods"];
+  neighborhood: string | null;
+  address: string | null;
+  estimated_duration_minutes: number | null;
+  price_level: number | null;
+  intensity: PossiblePlan["intensity"];
+  best_for: PossiblePlan["bestFor"];
+  google_maps_url: string | null;
+  apple_maps_url: string | null;
+  website_url: string | null;
+  ticket_url: string | null;
+  reservation_url: string | null;
+  instagram_url: string | null;
+  uber_url: string | null;
+  tags: string[];
+  status: PossiblePlanStatus;
+  source: PossiblePlan["source"] | null;
+  notes: string | null;
+  is_nearby: boolean;
+}
+
+export interface NightEventRow {
+  id: string;
+  date: string;
+  type: NightEvent["type"];
+  title: string;
+  venue: string;
+  neighborhood: string | null;
+  start_time: string;
+  end_time: string | null;
+  price_info: string | null;
+  dress_code: string | null;
+  intensity: NightEvent["intensity"];
+  buy_ahead: boolean;
+  google_maps_url: string | null;
+  apple_maps_url: string | null;
+  website_url: string | null;
+  ticket_url: string | null;
+  uber_url: string | null;
+  status: PossiblePlanStatus;
+  notes: string | null;
+}
+
+export interface FlightRow {
+  id: string;
+  passenger_id: string;
+  passenger_name: string;
+  route: string;
+  from: string;
+  to: string;
+  flight_number: string;
+  seat: string | null;
+  terminal: string | null;
+  gate: string | null;
+  boarding_time: string | null;
+  departure_time: string;
+  arrival_time: string | null;
+  date: string;
+  status: Flight["status"];
+  confirmation_code: string | null;
+}
+
+export interface TravelTimelineRow {
+  id: string;
+  time: string;
+  label: string;
+  subtitle?: string | null;
+  date: string;
+  is_departure: boolean;
+}
+
+export interface DayAlternativeRow {
+  id: string;
+  day_id: string;
+  trigger: DayAlternativePlan["trigger"];
+  title: string;
+  description: string;
+  plan_item_ids: string[];
+}
+
+export interface ChecklistRow {
+  id: string;
+  title: string;
+  type: Checklist["type"];
+  items: ChecklistItem[];
+}
+
+export interface EssentialPlaceRow {
+  id: string;
+  name: string;
+  type: EssentialPlace["type"];
+  address: string;
+  area: string | null;
+  base_name: string | null;
+  notes: string | null;
+  google_maps_url: string | null;
+  apple_maps_url: string | null;
+  uber_url: string | null;
+}
+
+export interface TravelDocumentRow {
+  id: string;
+  title: string;
+  type: TravelDocument["type"];
+  url: string | null;
+  notes: string | null;
+}
+
+export interface AgreementRow {
+  id: string;
+  text: string;
+  order: number;
+}
+
+export function rowToFamilyMember(row: FamilyMemberRow): FamilyMember {
+  return {
+    id: row.id as FamilyMemberId,
+    name: row.name,
+    shortName: row.short_name,
+    color: row.color,
+  };
+}
+
+export function rowToTripConfig(row: TripConfigRowFull): TripConfig {
+  return {
+    destination: row.destination,
+    baseAddress: row.base_address,
+    startDate: dateOnly(row.start_date),
+    endDate: dateOnly(row.end_date),
+    mockToday: dateOnly(row.mock_today),
+  };
+}
+
+export function rowToTripDay(row: TripDayRow): TripDay {
+  return {
+    id: row.id,
+    date: dateOnly(row.date),
+    title: row.title,
+    theme: row.theme,
+    area: (row.area as TripDay["area"]) ?? undefined,
+    baseName: row.base_name ?? undefined,
+    baseAddress: row.base_address ?? undefined,
+    weather: row.weather ?? undefined,
+    isTravelDay: row.is_travel_day,
+    isReturnDay: row.is_return_day,
+  };
+}
+
+export function rowToPossiblePlan(row: PossiblePlanRow): PossiblePlan {
+  return {
+    id: row.id,
+    title: row.title,
+    subtitle: row.subtitle ?? undefined,
+    description: row.description,
+    whyGo: row.why_go ?? undefined,
+    category: row.category,
+    periods: row.periods,
+    neighborhood: row.neighborhood ?? undefined,
+    address: row.address ?? undefined,
+    estimatedDurationMinutes: row.estimated_duration_minutes ?? undefined,
+    priceLevel: (row.price_level as PossiblePlan["priceLevel"]) ?? undefined,
+    intensity: row.intensity,
+    bestFor: row.best_for,
+    googleMapsUrl: row.google_maps_url ?? undefined,
+    appleMapsUrl: row.apple_maps_url ?? undefined,
+    websiteUrl: row.website_url ?? undefined,
+    ticketUrl: row.ticket_url ?? undefined,
+    reservationUrl: row.reservation_url ?? undefined,
+    instagramUrl: row.instagram_url ?? undefined,
+    uberUrl: row.uber_url ?? undefined,
+    tags: row.tags ?? [],
+    status: row.status,
+    source: row.source ?? undefined,
+    notes: row.notes ?? undefined,
+    isNearby: row.is_nearby,
+  };
+}
+
+export function rowToNightEvent(row: NightEventRow): NightEvent {
+  return {
+    id: row.id,
+    date: dateOnly(row.date),
+    type: row.type,
+    title: row.title,
+    venue: row.venue,
+    neighborhood: row.neighborhood ?? undefined,
+    startTime: row.start_time,
+    endTime: row.end_time ?? undefined,
+    priceInfo: row.price_info ?? undefined,
+    dressCode: row.dress_code ?? undefined,
+    intensity: row.intensity,
+    buyAhead: row.buy_ahead,
+    googleMapsUrl: row.google_maps_url ?? undefined,
+    appleMapsUrl: row.apple_maps_url ?? undefined,
+    websiteUrl: row.website_url ?? undefined,
+    ticketUrl: row.ticket_url ?? undefined,
+    uberUrl: row.uber_url ?? undefined,
+    status: row.status,
+    notes: row.notes ?? undefined,
+  };
+}
+
+export function rowToFlight(row: FlightRow): Flight {
+  return {
+    id: row.id,
+    passengerId: row.passenger_id as FamilyMemberId,
+    passengerName: row.passenger_name,
+    route: row.route,
+    from: row.from,
+    to: row.to,
+    flightNumber: row.flight_number,
+    seat: row.seat ?? undefined,
+    terminal: row.terminal ?? undefined,
+    gate: row.gate ?? undefined,
+    boardingTime: row.boarding_time ?? undefined,
+    departureTime: row.departure_time,
+    arrivalTime: row.arrival_time ?? undefined,
+    date: dateOnly(row.date),
+    status: row.status,
+    confirmationCode: row.confirmation_code ?? undefined,
+  };
+}
+
+export function rowToTravelTimeline(row: TravelTimelineRow): TravelTimelineItem {
+  return {
+    id: row.id,
+    time: row.time,
+    label: row.label,
+    subtitle: row.subtitle ?? undefined,
+    date: dateOnly(row.date),
+    isDeparture: row.is_departure,
+  };
+}
+
+export function flightToRow(flight: Flight): FlightRow {
+  return {
+    id: flight.id,
+    passenger_id: flight.passengerId,
+    passenger_name: flight.passengerName,
+    route: flight.route,
+    from: flight.from,
+    to: flight.to,
+    flight_number: flight.flightNumber,
+    seat: flight.seat ?? null,
+    terminal: flight.terminal ?? null,
+    gate: flight.gate ?? null,
+    boarding_time: flight.boardingTime ?? null,
+    departure_time: flight.departureTime,
+    arrival_time: flight.arrivalTime ?? null,
+    date: flight.date,
+    status: flight.status,
+    confirmation_code: flight.confirmationCode ?? null,
+  };
+}
+
+export function travelTimelineToRow(
+  item: TravelTimelineItem
+): TravelTimelineRow {
+  return {
+    id: item.id,
+    time: item.time,
+    label: item.label,
+    subtitle: item.subtitle ?? null,
+    date: item.date,
+    is_departure: item.isDeparture ?? false,
+  };
+}
+
+export function checklistToRow(checklist: Checklist): ChecklistRow {
+  return {
+    id: checklist.id,
+    title: checklist.title,
+    type: checklist.type,
+    items: checklist.items,
+  };
+}
+
+export function tripDayToRow(day: TripDay): TripDayRow {
+  return {
+    id: day.id,
+    date: day.date,
+    title: day.title,
+    theme: day.theme,
+    area: day.area ?? null,
+    base_name: day.baseName ?? null,
+    base_address: day.baseAddress ?? null,
+    weather: day.weather ?? null,
+    is_travel_day: day.isTravelDay ?? false,
+    is_return_day: day.isReturnDay ?? false,
+  };
+}
+
+export function rowToDayAlternative(row: DayAlternativeRow): DayAlternativePlan {
+  return {
+    id: row.id,
+    dayId: row.day_id,
+    trigger: row.trigger,
+    title: row.title,
+    description: row.description,
+    planItemIds: row.plan_item_ids ?? [],
+  };
+}
+
+export function rowToChecklist(row: ChecklistRow): Checklist {
+  return {
+    id: row.id,
+    title: row.title,
+    type: row.type,
+    items: Array.isArray(row.items) ? row.items : [],
+  };
+}
+
+export function rowToEssentialPlace(row: EssentialPlaceRow): EssentialPlace {
+  return {
+    id: row.id,
+    name: row.name,
+    type: row.type,
+    address: row.address,
+    area: (row.area as EssentialPlace["area"]) ?? undefined,
+    baseName: row.base_name ?? undefined,
+    notes: row.notes ?? undefined,
+    googleMapsUrl: row.google_maps_url ?? undefined,
+    appleMapsUrl: row.apple_maps_url ?? undefined,
+    uberUrl: row.uber_url ?? undefined,
+  };
+}
+
+export function rowToTravelDocument(row: TravelDocumentRow): TravelDocument {
+  return {
+    id: row.id,
+    title: row.title,
+    type: row.type,
+    url: row.url ?? undefined,
+    notes: row.notes ?? undefined,
+  };
+}
+
+export function rowToAgreement(row: AgreementRow): Agreement {
+  return {
+    id: row.id,
+    text: row.text,
+    order: row.order,
   };
 }

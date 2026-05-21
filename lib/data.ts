@@ -1,3 +1,7 @@
+/**
+ * Fallback estático quando o Supabase não responde.
+ * Em produção os dados vêm de fetchFullTripData no TripProvider.
+ */
 import type {
   Agreement,
   Checklist,
@@ -11,6 +15,7 @@ import type {
   PossiblePlan,
   TravelDocument,
   TravelTimelineItem,
+  TripConfig,
   TripDay,
   TripTask,
 } from "@/types";
@@ -29,36 +34,39 @@ import memoriesData from "@/data/memories.json";
 import agreementsData from "@/data/agreements.json";
 import dayAlternativesData from "@/data/day-alternatives.json";
 import travelTimelineData from "@/data/travel-timeline.json";
+import type { FullTripData } from "@/lib/supabase/queries";
 
-export const TRIP_CONFIG = {
+export const FALLBACK_TRIP_CONFIG: TripConfig = {
   destination: "Miami + Islamorada",
   baseAddress:
     "Miami: 3024 Aviation Avenue, Miami, FL 33133 · Islamorada: 82100 Overseas Highway, Islamorada, FL 33036",
   startDate: "2026-05-22",
   endDate: "2026-05-30",
-  mockToday: "2026-05-24",
-} as const;
+  mockToday: "2026-05-20",
+};
 
-export const family: FamilyMember[] = familyData as FamilyMember[];
-export const tripDays: TripDay[] = tripDaysData as TripDay[];
-export const initialItineraryEvents: ItineraryEvent[] =
-  itineraryEventsData as ItineraryEvent[];
-export const possiblePlans: PossiblePlan[] = possiblePlansData as PossiblePlan[];
-export const essentialPlaces: EssentialPlace[] =
-  essentialPlacesData as EssentialPlace[];
-export const travelDocuments: TravelDocument[] =
-  travelDocumentsData as TravelDocument[];
-export const initialTasks: TripTask[] = tripTasksData as TripTask[];
-export const checklists: Checklist[] = checklistsData as Checklist[];
-export const nightEvents: NightEvent[] = nightEventsData as NightEvent[];
-export const flights: Flight[] = flightsData as Flight[];
-export const initialMemories: Memory[] = memoriesData as Memory[];
-export const agreements: Agreement[] = agreementsData as Agreement[];
-export const dayAlternatives: DayAlternativePlan[] =
-  dayAlternativesData as DayAlternativePlan[];
-export const travelTimeline: TravelTimelineItem[] =
-  travelTimelineData as TravelTimelineItem[];
+export const FALLBACK_TRIP_DATA: FullTripData = {
+  family: familyData as FamilyMember[],
+  config: FALLBACK_TRIP_CONFIG,
+  tripDays: tripDaysData as TripDay[],
+  itineraryEvents: itineraryEventsData as ItineraryEvent[],
+  possiblePlans: possiblePlansData as PossiblePlan[],
+  essentialPlaces: essentialPlacesData as EssentialPlace[],
+  travelDocuments: travelDocumentsData as TravelDocument[],
+  tasks: tripTasksData as TripTask[],
+  checklists: checklistsData as Checklist[],
+  nightEvents: nightEventsData as NightEvent[],
+  flights: flightsData as Flight[],
+  memories: memoriesData as Memory[],
+  agreements: agreementsData as Agreement[],
+  dayAlternatives: dayAlternativesData as DayAlternativePlan[],
+  travelTimeline: travelTimelineData as TravelTimelineItem[],
+  checklistStates: {},
+};
 
-export function getFamilyMember(id: string): FamilyMember | undefined {
+export function getFamilyMember(
+  family: FamilyMember[],
+  id: string
+): FamilyMember | undefined {
   return family.find((m) => m.id === id);
 }

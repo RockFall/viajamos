@@ -1,102 +1,226 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type {
+  Agreement,
+  Checklist,
+  DayAlternativePlan,
+  EssentialPlace,
+  FamilyMember,
+  Flight,
   ItineraryEvent,
   Memory,
+  NightEvent,
+  PossiblePlan,
   PossiblePlanStatus,
+  TravelDocument,
+  TravelTimelineItem,
+  TripConfig,
+  TripDay,
   TripTask,
 } from "@/types";
 import {
   itineraryEventToRow,
   memoryToRow,
+  rowToAgreement,
+  rowToChecklist,
+  rowToDayAlternative,
+  rowToEssentialPlace,
+  rowToFamilyMember,
+  rowToFlight,
   rowToItineraryEvent,
   rowToMemory,
+  rowToNightEvent,
+  rowToPossiblePlan,
+  rowToTravelDocument,
+  rowToTravelTimeline,
+  rowToTripConfig,
+  rowToTripDay,
   rowToTripTask,
   tripTaskToRow,
+  flightToRow,
+  travelTimelineToRow,
+  checklistToRow,
+  tripDayToRow,
+  type AgreementRow,
   type ChecklistItemStateRow,
+  type ChecklistRow,
+  type DayAlternativeRow,
+  type EssentialPlaceRow,
+  type FlightRow,
   type ItineraryEventRow,
   type MemoryRow,
-  type PossiblePlanStatusRow,
-  type TripConfigRow,
+  type NightEventRow,
+  type PossiblePlanRow,
+  type TravelDocumentRow,
+  type TravelTimelineRow,
+  type TripConfigRowFull,
+  type TripDayRow,
   type TripTaskRow,
+  type FamilyMemberRow,
 } from "./mappers";
 
-export interface MutableTripState {
+export interface FullTripData {
+  family: FamilyMember[];
+  config: TripConfig;
+  tripDays: TripDay[];
+  possiblePlans: PossiblePlan[];
+  nightEvents: NightEvent[];
+  flights: Flight[];
+  travelTimeline: TravelTimelineItem[];
+  dayAlternatives: DayAlternativePlan[];
+  checklists: Checklist[];
+  essentialPlaces: EssentialPlace[];
+  travelDocuments: TravelDocument[];
+  agreements: Agreement[];
   itineraryEvents: ItineraryEvent[];
   tasks: TripTask[];
   checklistStates: Record<string, boolean>;
-  possiblePlanStatuses: Record<string, PossiblePlanStatus>;
   memories: Memory[];
-  mockToday: string;
 }
 
-export async function fetchMutableTripState(
+function logErrors(label: string, errors: Record<string, unknown>) {
+  const filtered = Object.fromEntries(
+    Object.entries(errors).filter(([, v]) => v != null)
+  );
+  if (Object.keys(filtered).length > 0) {
+    console.warn(`Supabase ${label}:`, filtered);
+  }
+}
+
+export async function fetchFullTripData(
   client: SupabaseClient
-): Promise<MutableTripState | null> {
+): Promise<FullTripData | null> {
   const [
+    familyResult,
+    configResult,
+    tripDaysResult,
+    plansResult,
+    nightResult,
+    flightsResult,
+    timelineResult,
+    alternativesResult,
+    checklistsResult,
+    checklistStatesResult,
+    placesResult,
+    documentsResult,
+    agreementsResult,
     eventsResult,
     tasksResult,
-    checklistResult,
-    plansResult,
     memoriesResult,
-    configResult,
   ] = await Promise.all([
+    client.from("family_members").select("*").order("id"),
+    client.from("trip_config").select("*").eq("id", "default").maybeSingle(),
+    client.from("trip_days").select("*").order("date"),
+    client.from("possible_plans").select("*").order("title"),
+    client.from("night_events").select("*").order("date").order("start_time"),
+    client.from("flights").select("*").order("date"),
+    client.from("travel_timeline_items").select("*").order("date").order("time"),
+    client.from("day_alternative_plans").select("*"),
+    client.from("checklists").select("*").order("type"),
+    client.from("checklist_item_states").select("*"),
+    client.from("essential_places").select("*").order("name"),
+    client.from("travel_documents").select("*").order("title"),
+    client.from("agreements").select("*").order("order"),
     client.from("itinerary_events").select("*").order("date").order("start_time"),
     client.from("trip_tasks").select("*").order("due_date"),
-    client.from("checklist_item_states").select("*"),
-    client.from("possible_plans").select("id, status"),
     client.from("memories").select("*").order("date"),
-    client.from("trip_config").select("mock_today").eq("id", "default").maybeSingle(),
   ]);
 
-  if (
-    eventsResult.error ||
-    tasksResult.error ||
-    checklistResult.error ||
-    plansResult.error ||
-    memoriesResult.error ||
-    configResult.error
-  ) {
-    console.warn("Supabase fetch errors:", {
-      events: eventsResult.error,
-      tasks: tasksResult.error,
-      checklist: checklistResult.error,
-      plans: plansResult.error,
-      memories: memoriesResult.error,
-      config: configResult.error,
-    });
+  logErrors("fetch", {
+    family: familyResult.error,
+    config: configResult.error,
+    tripDays: tripDaysResult.error,
+    plans: plansResult.error,
+    night: nightResult.error,
+    flights: flightsResult.error,
+    timeline: timelineResult.error,
+    alternatives: alternativesResult.error,
+    checklists: checklistsResult.error,
+    checklistStates: checklistStatesResult.error,
+    places: placesResult.error,
+    documents: documentsResult.error,
+    agreements: agreementsResult.error,
+    events: eventsResult.error,
+    tasks: tasksResult.error,
+    memories: memoriesResult.error,
+  });
+
+  const criticalError =
+    familyResult.error ||
+    configResult.error ||
+    tripDaysResult.error ||
+    eventsResult.error;
+
+  if (criticalError) {
     return null;
   }
 
-  const hasAnyData =
-    (eventsResult.data?.length ?? 0) > 0 ||
-    (tasksResult.data?.length ?? 0) > 0 ||
-    (memoriesResult.data?.length ?? 0) > 0 ||
-    configResult.data !== null;
+  const tripDays = ((tripDaysResult.data ?? []) as TripDayRow[]).map(
+    rowToTripDay
+  );
+  const itineraryEvents = ((eventsResult.data ?? []) as ItineraryEventRow[]).map(
+    rowToItineraryEvent
+  );
 
-  if (!hasAnyData) {
+  const hasData =
+    tripDays.length > 0 ||
+    itineraryEvents.length > 0 ||
+    ((plansResult.data ?? []) as PossiblePlanRow[]).length > 0;
+
+  if (!hasData) {
     return null;
   }
 
   const checklistStates: Record<string, boolean> = {};
-  for (const row of (checklistResult.data ?? []) as ChecklistItemStateRow[]) {
+  for (const row of (checklistStatesResult.data ?? []) as ChecklistItemStateRow[]) {
     checklistStates[row.item_id] = row.checked;
   }
 
-  const possiblePlanStatuses: Record<string, PossiblePlanStatus> = {};
-  for (const row of (plansResult.data ?? []) as PossiblePlanStatusRow[]) {
-    possiblePlanStatuses[row.id] = row.status;
-  }
+  const configRow = configResult.data as TripConfigRowFull | null;
+  const config: TripConfig = configRow
+    ? rowToTripConfig(configRow)
+    : {
+        destination: "Miami + Islamorada",
+        baseAddress: "",
+        startDate: tripDays[0]?.date ?? "2026-05-22",
+        endDate: tripDays[tripDays.length - 1]?.date ?? "2026-05-30",
+        mockToday: "2026-05-20",
+      };
 
   return {
-    itineraryEvents: ((eventsResult.data ?? []) as ItineraryEventRow[]).map(
-      rowToItineraryEvent
+    family: ((familyResult.data ?? []) as FamilyMemberRow[]).map(
+      rowToFamilyMember
     ),
+    config,
+    tripDays,
+    possiblePlans: ((plansResult.data ?? []) as PossiblePlanRow[]).map(
+      rowToPossiblePlan
+    ),
+    nightEvents: ((nightResult.data ?? []) as NightEventRow[]).map(
+      rowToNightEvent
+    ),
+    flights: ((flightsResult.data ?? []) as FlightRow[]).map(rowToFlight),
+    travelTimeline: ((timelineResult.data ?? []) as TravelTimelineRow[]).map(
+      rowToTravelTimeline
+    ),
+    dayAlternatives: ((alternativesResult.data ?? []) as DayAlternativeRow[]).map(
+      rowToDayAlternative
+    ),
+    checklists: ((checklistsResult.data ?? []) as ChecklistRow[]).map(
+      rowToChecklist
+    ),
+    essentialPlaces: ((placesResult.data ?? []) as EssentialPlaceRow[]).map(
+      rowToEssentialPlace
+    ),
+    travelDocuments: ((documentsResult.data ?? []) as TravelDocumentRow[]).map(
+      rowToTravelDocument
+    ),
+    agreements: ((agreementsResult.data ?? []) as AgreementRow[]).map(
+      rowToAgreement
+    ),
+    itineraryEvents,
     tasks: ((tasksResult.data ?? []) as TripTaskRow[]).map(rowToTripTask),
     checklistStates,
-    possiblePlanStatuses,
     memories: ((memoriesResult.data ?? []) as MemoryRow[]).map(rowToMemory),
-    mockToday:
-      (configResult.data as TripConfigRow | null)?.mock_today ?? "2026-05-24",
   };
 }
 
@@ -159,40 +283,58 @@ export async function upsertMemory(
   if (error) console.warn("Failed to upsert memory:", error.message);
 }
 
-export async function updateMockToday(
+export async function upsertFlight(
   client: SupabaseClient,
-  mockToday: string
+  flight: Flight
 ): Promise<void> {
-  const { error } = await client
-    .from("trip_config")
-    .upsert({
-      id: "default",
-      destination: "Miami + Islamorada",
-      base_address:
-        "Miami: 3024 Aviation Avenue, Miami, FL 33133 · Islamorada: 82100 Overseas Highway, Islamorada, FL 33036",
-      start_date: "2026-05-22",
-      end_date: "2026-05-30",
-      mock_today: mockToday,
-    });
-  if (error) console.warn("Failed to update mock today:", error.message);
+  const { error } = await client.from("flights").upsert(flightToRow(flight));
+  if (error) console.warn("Failed to upsert flight:", error.message);
 }
 
-export async function syncAllMutableState(
+export async function deleteFlight(
   client: SupabaseClient,
-  state: MutableTripState
+  id: string
 ): Promise<void> {
-  await Promise.all([
-    client
-      .from("itinerary_events")
-      .upsert(state.itineraryEvents.map(itineraryEventToRow)),
-    client.from("trip_tasks").upsert(state.tasks.map(tripTaskToRow)),
-    client.from("memories").upsert(state.memories.map(memoryToRow)),
-    updateMockToday(client, state.mockToday),
-    ...Object.entries(state.checklistStates).map(([itemId, checked]) =>
-      upsertChecklistItemState(client, itemId, checked)
-    ),
-    ...Object.entries(state.possiblePlanStatuses).map(([planId, status]) =>
-      upsertPossiblePlanStatus(client, planId, status)
-    ),
-  ]);
+  const { error } = await client.from("flights").delete().eq("id", id);
+  if (error) console.warn("Failed to delete flight:", error.message);
+}
+
+export async function upsertTravelTimelineItem(
+  client: SupabaseClient,
+  item: TravelTimelineItem
+): Promise<void> {
+  const { error } = await client
+    .from("travel_timeline_items")
+    .upsert(travelTimelineToRow(item));
+  if (error) console.warn("Failed to upsert travel timeline:", error.message);
+}
+
+export async function deleteTravelTimelineItem(
+  client: SupabaseClient,
+  id: string
+): Promise<void> {
+  const { error } = await client
+    .from("travel_timeline_items")
+    .delete()
+    .eq("id", id);
+  if (error)
+    console.warn("Failed to delete travel timeline item:", error.message);
+}
+
+export async function upsertTripDay(
+  client: SupabaseClient,
+  day: TripDay
+): Promise<void> {
+  const { error } = await client.from("trip_days").upsert(tripDayToRow(day));
+  if (error) console.warn("Failed to upsert trip day:", error.message);
+}
+
+export async function upsertChecklist(
+  client: SupabaseClient,
+  checklist: Checklist
+): Promise<void> {
+  const { error } = await client
+    .from("checklists")
+    .upsert(checklistToRow(checklist));
+  if (error) console.warn("Failed to upsert checklist:", error.message);
 }

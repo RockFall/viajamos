@@ -3,12 +3,6 @@
 import { useState } from "react";
 import { useTrip } from "@/context/TripProvider";
 import {
-  essentialPlaces,
-  travelDocuments,
-  checklists,
-  agreements,
-} from "@/lib/data";
-import {
   ESSENTIAL_TYPE_LABELS,
   DOCUMENT_TYPE_LABELS,
   CHECKLIST_TYPE_LABELS,
@@ -25,7 +19,9 @@ import {
   Download,
   Settings,
   ChevronRight,
+  Pencil,
 } from "lucide-react";
+import { TripContentEditor } from "@/components/settings/TripContentEditor";
 
 type Section =
   | "menu"
@@ -57,8 +53,18 @@ export default function MaisPage() {
     updateMemory,
     exportState,
     today,
+    realToday,
+    isDateSimulated,
     setMockToday,
+    resetToday,
     tripDays,
+    config,
+    essentialPlaces,
+    travelDocuments,
+    checklists,
+    agreements,
+    dataSource,
+    isHydrated,
   } = useTrip();
   const [section, setSection] = useState<Section>("menu");
 
@@ -278,24 +284,78 @@ export default function MaisPage() {
         {section === "settings" && (
           <>
             <h1 className="text-xl font-bold">Configurações</h1>
-            <div className="card p-4">
-              <label className="text-sm font-medium">
-                Data simulada (demo)
-              </label>
-              <p className="mb-2 text-xs text-muted">
-                Altere para testar modo viagem ou dias diferentes
+
+            <div className="card border-terracotta/20 p-4">
+              <div className="mb-3 flex items-center gap-2">
+                <Pencil size={18} className="text-terracotta" />
+                <h2 className="font-semibold">Editor de conteúdo</h2>
+              </div>
+              <TripContentEditor />
+            </div>
+
+            <div className="card p-4 space-y-3">
+              <h2 className="text-sm font-semibold">App</h2>
+              <p className="text-xs text-muted-foreground">
+                Fonte de dados:{" "}
+                <span className="font-semibold text-terracotta">
+                  {dataSource === "supabase" ? "Supabase (ao vivo)" : "JSON local (fallback)"}
+                </span>
               </p>
-              <select
-                value={today}
-                onChange={(e) => setMockToday(e.target.value)}
-                className="w-full rounded-xl border px-3 py-2 text-sm"
-              >
-                {tripDays.map((d) => (
-                  <option key={d.id} value={d.date}>
-                    {d.date} — {d.title}
+              <div>
+                <label className="text-sm font-medium">Data de hoje</label>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {realToday.slice(8, 10)}/{realToday.slice(5, 7)}/
+                  {realToday.slice(0, 4)}
+                  {isDateSimulated && (
+                    <span className="text-terracotta">
+                      {" "}
+                      · simulando {today.slice(8, 10)}/{today.slice(5, 7)}
+                    </span>
+                  )}
+                </p>
+              </div>
+              <div>
+                <label className="text-sm font-medium">
+                  Simular outro dia (demo)
+                </label>
+                <p className="mb-2 text-xs text-muted-foreground">
+                  Para testar pré-viagem, dia de voo ou roteiro em outra data
+                </p>
+                <select
+                  value={today}
+                  onChange={(e) => {
+                    const next = e.target.value;
+                    if (next === realToday) resetToday();
+                    else setMockToday(next);
+                  }}
+                  className="w-full rounded-xl border px-3 py-2 text-sm"
+                >
+                  <option value={realToday}>
+                    Hoje ({realToday.slice(8, 10)}/{realToday.slice(5, 7)})
                   </option>
-                ))}
-              </select>
+                  {[config.startDate, config.endDate]
+                    .filter((d) => !tripDays.some((td) => td.date === d))
+                    .map((date) => (
+                      <option key={date} value={date}>
+                        {date.slice(8, 10)}/{date.slice(5, 7)} — especial
+                      </option>
+                    ))}
+                  {tripDays.map((d) => (
+                    <option key={d.id} value={d.date}>
+                      {d.date.slice(8, 10)}/{d.date.slice(5, 7)} — {d.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {isDateSimulated && (
+                <button
+                  type="button"
+                  onClick={resetToday}
+                  className="w-full rounded-xl bg-secondary py-2 text-sm font-medium text-warm-black ring-1 ring-border"
+                >
+                  Voltar para a data real
+                </button>
+              )}
             </div>
           </>
         )}

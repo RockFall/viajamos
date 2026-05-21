@@ -1,6 +1,14 @@
 import type { EventPeriod, ItineraryEvent } from "@/types";
-import { PERIOD_ICONS, PERIOD_LABELS } from "@/lib/labels";
+import { PERIOD_LABELS } from "@/lib/labels";
+import { PeriodIcon } from "@/components/ui/EventIcons";
 import { EventCard } from "./EventCard";
+
+const PERIOD_ACCENT: Record<EventPeriod, string> = {
+  morning: "border-terracotta",
+  afternoon: "border-sunset",
+  night: "border-terracotta-deep",
+  late_night: "border-warm-black/40",
+};
 
 interface PeriodSectionProps {
   period: EventPeriod;
@@ -8,7 +16,6 @@ interface PeriodSectionProps {
   groupedIds?: Set<string>;
   onEdit?: (event: ItineraryEvent) => void;
   onDelete?: (id: string) => void;
-  onStatusChange?: (id: string, status: ItineraryEvent["status"]) => void;
 }
 
 export function PeriodSection({
@@ -17,16 +24,18 @@ export function PeriodSection({
   groupedIds,
   onEdit,
   onDelete,
-  onStatusChange,
 }: PeriodSectionProps) {
   if (events.length === 0) return null;
 
-  const periodClass = `period-${period}`;
-
   return (
-    <section className={`${periodClass} pl-4`}>
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-muted">
-        <span>{PERIOD_ICONS[period]}</span>
+    <section className={`border-l-2 pl-4 ${PERIOD_ACCENT[period]}`}>
+      <h3 className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
+        <PeriodIcon
+          period={period}
+          size={14}
+          strokeWidth={2.25}
+          className="shrink-0 text-terracotta"
+        />
         {PERIOD_LABELS[period]}
       </h3>
       <div className="space-y-3">
@@ -38,11 +47,6 @@ export function PeriodSection({
               event={event}
               onEdit={onEdit ? () => onEdit(event) : undefined}
               onDelete={onDelete ? () => onDelete(event.id) : undefined}
-              onStatusChange={
-                onStatusChange
-                  ? (s) => onStatusChange(event.id, s)
-                  : undefined
-              }
             />
           );
         })}

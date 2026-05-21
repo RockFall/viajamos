@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 import { useTrip } from "@/context/TripProvider";
-import { dayAlternatives } from "@/lib/data";
 import { DayCanvas } from "@/components/cards/DayCanvas";
+import { RoteiroHeader } from "@/components/roteiro/RoteiroHeader";
 import { EventFormModal } from "@/components/forms/EventFormModal";
 import type { ItineraryEvent } from "@/types";
 
 export default function RoteiroPage() {
   const {
+    today,
     tripDays,
+    dayAlternatives,
     itineraryEvents,
     tasks,
-    updateEvent,
     deleteEvent,
+    isHydrated,
   } = useTrip();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<ItineraryEvent | null>(null);
@@ -30,17 +32,27 @@ export default function RoteiroPage() {
     setModalOpen(true);
   };
 
-  return (
-    <div className="space-y-6 pb-4">
-      <header>
-        <h1 className="text-2xl font-bold text-ocean">Roteiro</h1>
-        <p className="text-sm text-muted">
-          Canvas visual por dia — toque para expandir
-        </p>
-      </header>
+  const eventCount = itineraryEvents.filter(
+    (e) => e.status !== "cancelled"
+  ).length;
 
-      <div className="space-y-8">
-        {tripDays.map((day) => {
+  if (!isHydrated) {
+    return (
+      <div className="miami-gradient -mx-4 -mt-4 flex min-h-screen items-center justify-center pb-36 text-muted-foreground">
+        <p className="text-sm">Carregando roteiro…</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="miami-gradient -mx-4 -mt-4 min-h-screen pb-36 text-warm-black">
+      <RoteiroHeader
+        dayCount={tripDays.length}
+        eventCount={eventCount}
+      />
+
+      <div className="mx-auto max-w-[48ch] space-y-6 px-6">
+        {tripDays.map((day, index) => {
           const dayTasks = tasks
             .filter((t) => t.status === "open" && t.dueDate === day.date)
             .map((t) => t.title);
@@ -48,13 +60,14 @@ export default function RoteiroPage() {
             <DayCanvas
               key={day.id}
               day={day}
+              dayIndex={index}
+              today={today}
               events={itineraryEvents}
               alternatives={dayAlternatives.filter((a) => a.dayId === day.id)}
               pendingTasks={dayTasks}
               onAddEvent={() => openAdd(day.date)}
               onEditEvent={openEdit}
               onDeleteEvent={deleteEvent}
-              onStatusChange={(id, status) => updateEvent(id, { status })}
             />
           );
         })}

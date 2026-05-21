@@ -14,6 +14,16 @@
   --card-bg: #ffffff;
   --muted: #6b7280;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Terracotta / editorial palette (trip-harmony-hub) */
+  --sand-50: #faf8f5;
+  --sand-100: #f5f0e8;
+  --sand-200: #ebe4d8;
+  --terracotta: #c45c3e;
+  --terracotta-deep: #9e4529;
+  --warm-black: #2a2420;
+  --border-subtle: rgba(42, 36, 32, 0.08);
+  --muted-foreground: #7a6f66;
 }
 
 @theme inline {
@@ -29,7 +39,18 @@
   --color-cream: var(--cream);
   --color-card: var(--card-bg);
   --color-muted: var(--muted);
+  --color-sand-50: var(--sand-50);
+  --color-sand-100: var(--sand-100);
+  --color-sand-200: var(--sand-200);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-deep: var(--terracotta-deep);
+  --color-warm-black: var(--warm-black);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border-subtle);
+  --color-secondary: var(--sand-100);
+  --color-accent: var(--sand-200);
   --font-sans: var(--font-dm-sans);
+  --font-serif: var(--font-fraunces);
 }
 
 * {
@@ -40,6 +61,20 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-optical-sizing: auto;
+}
+
+.miami-gradient {
+  background-color: var(--sand-50);
+  background-image:
+    radial-gradient(at 0% 0%, rgba(196, 92, 62, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(244, 162, 97, 0.15) 0px, transparent 55%),
+    radial-gradient(at 100% 100%, var(--sand-50) 0px, transparent 50%);
 }
 
 /* Miami gradient backgrounds */
@@ -127,7 +162,7 @@ body {
 }
 
 .main-content {
-  padding-bottom: calc(5rem + var(--safe-bottom));
+  padding-bottom: calc(6.5rem + var(--safe-bottom));
 }
 
 /* Animations */

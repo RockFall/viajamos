@@ -317,6 +317,7 @@ CREATE TABLE travel_timeline_items (
   id TEXT PRIMARY KEY,
   time TEXT NOT NULL,
   label TEXT NOT NULL,
+  subtitle TEXT,
   date DATE NOT NULL,
   is_departure BOOLEAN NOT NULL DEFAULT FALSE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

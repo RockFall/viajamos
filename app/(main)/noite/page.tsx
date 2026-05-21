@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { nightEvents, tripDays } from "@/lib/data";
+import { useTrip } from "@/context/TripProvider";
 import { NightEventCard } from "@/components/cards/NightEventCard";
 import { AddToItineraryModal } from "@/components/forms/AddToItineraryModal";
 import { NIGHT_TYPE_LABELS } from "@/lib/labels";
@@ -15,6 +15,7 @@ const NIGHT_SECTIONS: NightEventType[] = [
 ];
 
 export default function NoitePage() {
+  const { nightEvents, tripDays, isHydrated } = useTrip();
   const tripNights = tripDays.filter(
     (d) => !d.isTravelDay || d.date !== "2026-05-23"
   );
@@ -28,6 +29,14 @@ export default function NoitePage() {
     () => nightEvents.filter((e) => e.date === selectedDate),
     [selectedDate]
   );
+
+  if (!isHydrated) {
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center text-slate-400">
+        <p className="text-sm">Carregando radar da noite…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="night-page -mx-4 -mt-4 px-4 pt-4 pb-8">

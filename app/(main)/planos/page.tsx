@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { possiblePlans } from "@/lib/data";
 import { useTrip } from "@/context/TripProvider";
 import { PossiblePlanCard } from "@/components/cards/PossiblePlanCard";
 import { FilterBar } from "@/components/forms/FilterBar";
@@ -14,7 +13,7 @@ import {
 import type { PossiblePlan, BestFor } from "@/types";
 
 export default function PlanosPage() {
-  const { possiblePlanStatuses } = useTrip();
+  const { possiblePlans, isHydrated } = useTrip();
   const [category, setCategory] = useState("");
   const [intensity, setIntensity] = useState("");
   const [bestFor, setBestFor] = useState("");
@@ -22,26 +21,17 @@ export default function PlanosPage() {
   const [selectedPlan, setSelectedPlan] = useState<PossiblePlan | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const plansWithStatus = useMemo(
-    () =>
-      possiblePlans.map((p) => ({
-        ...p,
-        status: possiblePlanStatuses[p.id] ?? p.status,
-      })),
-    [possiblePlanStatuses]
-  );
-
   const filtered = useMemo(() => {
-    return plansWithStatus.filter((p) => {
+    return possiblePlans.filter((p) => {
       if (category && p.category !== category) return false;
       if (intensity && p.intensity !== intensity) return false;
       if (bestFor && !p.bestFor.includes(bestFor as BestFor)) return false;
       if (nearbyOnly && !p.isNearby) return false;
       return p.status !== "discarded";
     });
-  }, [plansWithStatus, category, intensity, bestFor, nearbyOnly]);
+  }, [possiblePlans, category, intensity, bestFor, nearbyOnly]);
 
-  const nearbyPlans = plansWithStatus.filter((p) => p.isNearby);
+  const nearbyPlans = possiblePlans.filter((p) => p.isNearby);
 
   const categoryOptions = Object.entries(POSSIBLE_CATEGORY_LABELS).map(
     ([value, label]) => ({ value, label })
@@ -52,6 +42,14 @@ export default function PlanosPage() {
   const bestForOptions = Object.entries(BEST_FOR_LABELS).map(
     ([value, label]) => ({ value, label })
   );
+
+  if (!isHydrated) {
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center text-muted-foreground">
+        <p className="text-sm">Carregando planos…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 pb-4">
@@ -86,36 +84,39 @@ export default function PlanosPage() {
           type="checkbox"
           checked={nearbyOnly}
           onChange={(e) => setNearbyOnly(e.target.checked)}
-          className="accent-teal"
+          className="accent-terracotta"
         />
-        Só perto de casa
+        Só perto da base
       </label>
 
-      {!nearbyOnly && nearbyPlans.length > 0 && (
+      {nearbyPlans.length > 0 && !nearbyOnly && (
         <section>
-          <h2 className="mb-3 text-lg font-semibold text-teal-dark">
-            🏠 Perto da nossa base
+          <h2 className="mb-3 text-sm font-semibold text-teal-dark">
+            Perto de casa ({nearbyPlans.length})
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {nearbyPlans.slice(0, 4).map((plan) => (
-              <PossiblePlanCard
-                key={plan.id}
-                plan={plan}
-                onAddToItinerary={() => {
-                  setSelectedPlan(plan);
-                  setModalOpen(true);
-                }}
-              />
-            ))}
+          <div className="space-y-3">
+            {nearbyPlans
+              .filter((p) => p.status !== "discarded")
+              .slice(0, 3)
+              .map((plan) => (
+                <PossiblePlanCard
+                  key={plan.id}
+                  plan={plan}
+                  onAddToItinerary={() => {
+                    setSelectedPlan(plan);
+                    setModalOpen(true);
+                  }}
+                />
+              ))}
           </div>
         </section>
       )}
 
       <section>
-        <h2 className="mb-3 text-lg font-semibold">
-          Catálogo ({filtered.length})
+        <h2 className="mb-3 text-sm font-semibold">
+          Todos ({filtered.length})
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-3">
           {filtered.map((plan) => (
             <PossiblePlanCard
               key={plan.id}
@@ -131,11 +132,8 @@ export default function PlanosPage() {
 
       <AddToItineraryModal
         open={modalOpen}
-        onClose={() => {
-          setModalOpen(false);
-          setSelectedPlan(null);
-        }}
-        plan={selectedPlan}
+        onClose={() => setModalOpen(false)}
+        plan={selectedPlan ?? undefined}
       />
     </div>
   );

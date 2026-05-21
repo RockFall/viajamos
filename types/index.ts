@@ -266,6 +266,8 @@ export interface TravelTimelineItem {
   id: string;
   time: string;
   label: string;
+  /** Detalhe secundário (ex.: placa do Uber, grupo de embarque) */
+  subtitle?: string;
   date: string;
   isDeparture?: boolean;
 }
