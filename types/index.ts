@@ -1,4 +1,4 @@
-export type FamilyMemberId = "caio" | "father" | "mother" | "sister";
+export type FamilyMemberId = "caio" | "geovanin" | "adelaide" | "sofia";
 
 export interface FamilyMember {
   id: FamilyMemberId;
@@ -12,6 +12,9 @@ export interface TripDay {
   date: string;
   title: string;
   theme: string;
+  area?: "Miami" | "Islamorada" | "Travel";
+  baseName?: string;
+  baseAddress?: string;
   weather?: string;
   isTravelDay?: boolean;
   isReturnDay?: boolean;
@@ -27,6 +30,7 @@ export type EventCategory =
   | "walk"
   | "travel"
   | "rest"
+  | "experience"
   | "event";
 
 export type EventStatus =
@@ -88,10 +92,12 @@ export type Intensity = "light" | "moderate" | "intense";
 
 export type BestFor =
   | "family"
-  | "parents"
   | "caio"
-  | "sister"
-  | "caio_sister"
+  | "geovanin"
+  | "adelaide"
+  | "sofia"
+  | "caio_sofia"
+  | "adults"
   | "everyone";
 
 export interface PossiblePlan {
@@ -155,6 +161,8 @@ export interface EssentialPlace {
   name: string;
   type: EssentialPlaceType;
   address: string;
+  area?: "Miami" | "Islamorada" | "Travel";
+  baseName?: string;
   notes?: string;
   googleMapsUrl?: string;
   appleMapsUrl?: string;

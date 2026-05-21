@@ -23,7 +23,7 @@ const categoryMap: Record<string, EventCategory> = {
   shopping: "shopping",
   walk: "walk",
   bar: "event",
-  experience: "event",
+  experience: "experience",
   rainy_day: "event",
   nearby: "walk",
   late_night: "event",

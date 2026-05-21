@@ -1,39 +1,95 @@
 [
   {
+    "id": "day-22",
+    "date": "2026-05-22",
+    "title": "Saída de Belo Horizonte",
+    "theme": "Voo BH → Miami e chegada com calma",
+    "area": "Travel",
+    "baseName": "Base Miami",
+    "baseAddress": "3024 Aviation Avenue, Miami, FL 33133",
+    "weather": "Noite de viagem · detalhes do voo a definir",
+    "isTravelDay": true
+  },
+  {
     "id": "day-23",
     "date": "2026-05-23",
-    "title": "Dia de chegada",
-    "theme": "Viagem GRU → MIA e chegada em Miami",
-    "weather": "28°C · Parcialmente nublado",
-    "isTravelDay": true
+    "title": "Primeiro dia em Miami",
+    "theme": "Coconut Grove, Vizcaya e pôr do sol na baía",
+    "area": "Miami",
+    "baseName": "Base Miami",
+    "baseAddress": "3024 Aviation Avenue, Miami, FL 33133",
+    "weather": "29°C · Úmido e parcialmente nublado"
   },
   {
     "id": "day-24",
     "date": "2026-05-24",
-    "title": "Primeiro dia em Miami",
-    "theme": "Coconut Grove, descanso e jazz",
-    "weather": "29°C · Ensolarado"
+    "title": "Little Havana + jazz",
+    "theme": "Calle Ocho, comida cubana e música ao vivo",
+    "area": "Miami",
+    "baseName": "Base Miami",
+    "baseAddress": "3024 Aviation Avenue, Miami, FL 33133",
+    "weather": "30°C · Quente"
   },
   {
     "id": "day-25",
     "date": "2026-05-25",
     "title": "Arte, design e música",
-    "theme": "Design District, ICA Miami e jazz",
+    "theme": "Design District, ICA Miami e Lagniappe",
+    "area": "Miami",
+    "baseName": "Base Miami",
+    "baseAddress": "3024 Aviation Avenue, Miami, FL 33133",
     "weather": "30°C · Ensolarado"
   },
   {
     "id": "day-26",
     "date": "2026-05-26",
-    "title": "Noite dividida",
-    "theme": "Compras, jantar em família e festa",
+    "title": "Wynwood + noite dividida",
+    "theme": "Murais, compras leves, jantar e eletrônica opcional",
+    "area": "Miami",
+    "baseName": "Base Miami",
+    "baseAddress": "3024 Aviation Avenue, Miami, FL 33133",
     "weather": "31°C · Quente"
   },
   {
     "id": "day-27",
     "date": "2026-05-27",
-    "title": "Último dia e volta",
-    "theme": "Compras finais e retorno MIA → GRU",
-    "weather": "28°C · Parcialmente nublado",
+    "title": "Rumo às Keys",
+    "theme": "Manhã em Miami, estrada cênica e chegada em Islamorada",
+    "area": "Islamorada",
+    "baseName": "Base Islamorada",
+    "baseAddress": "82100 Overseas Highway, Islamorada, FL 33036, Estados Unidos",
+    "weather": "29°C · Sol com chance de chuva rápida",
+    "isTravelDay": true
+  },
+  {
+    "id": "day-28",
+    "date": "2026-05-28",
+    "title": "Água e vida marinha",
+    "theme": "Robbie's, tarpons, barco com fundo de vidro e sunset",
+    "area": "Islamorada",
+    "baseName": "Base Islamorada",
+    "baseAddress": "82100 Overseas Highway, Islamorada, FL 33036, Estados Unidos",
+    "weather": "30°C · Brisa de mar"
+  },
+  {
+    "id": "day-29",
+    "date": "2026-05-29",
+    "title": "Museu, arte local e jantar na areia",
+    "theme": "Plano flexível entre History of Diving, Rain Barrel e Morada Bay",
+    "area": "Islamorada",
+    "baseName": "Base Islamorada",
+    "baseAddress": "82100 Overseas Highway, Islamorada, FL 33036, Estados Unidos",
+    "weather": "30°C · Possível pancada à tarde"
+  },
+  {
+    "id": "day-30",
+    "date": "2026-05-30",
+    "title": "Fechamento da viagem",
+    "theme": "Manhã leve nas Keys e retorno com horários a definir",
+    "area": "Travel",
+    "baseName": "Base Islamorada",
+    "baseAddress": "82100 Overseas Highway, Islamorada, FL 33036, Estados Unidos",
+    "weather": "29°C · Dia de saída",
     "isReturnDay": true,
     "isTravelDay": true
   }

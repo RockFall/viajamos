@@ -54,7 +54,8 @@ export default function AgoraPage() {
           date={today}
           theme={dayInfo?.theme ?? "Dia de viagem"}
           weather={dayInfo?.weather}
-          baseAddress={config.baseAddress}
+          baseName={dayInfo?.baseName}
+          baseAddress={dayInfo?.baseAddress ?? config.baseAddress}
         />
         <section>
           <h2 className="mb-3 text-lg font-bold">Cartões de embarque</h2>
@@ -134,9 +135,10 @@ export default function AgoraPage() {
     <div className="animate-fade-in space-y-6">
       <DayHeader
         date={today}
-        theme={dayInfo?.theme ?? "Miami"}
+          theme={dayInfo?.theme ?? "Miami + Islamorada"}
         weather={dayInfo?.weather}
-        baseAddress={config.baseAddress}
+          baseName={dayInfo?.baseName}
+          baseAddress={dayInfo?.baseAddress ?? config.baseAddress}
       />
 
       <section>

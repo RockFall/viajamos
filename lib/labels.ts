@@ -54,6 +54,7 @@ export const CATEGORY_LABELS: Record<EventCategory, string> = {
   walk: "Passeio",
   travel: "Viagem",
   rest: "Descanso",
+  experience: "Experiência",
   event: "Evento",
 };
 
@@ -65,6 +66,7 @@ export const CATEGORY_COLORS: Record<EventCategory, string> = {
   walk: "bg-green-100 text-green-700",
   travel: "bg-cyan-100 text-cyan-700",
   rest: "bg-zinc-100 text-zinc-600",
+  experience: "bg-indigo-100 text-indigo-700",
   event: "bg-amber-100 text-amber-700",
 };
 
@@ -92,10 +94,12 @@ export const INTENSITY_LABELS: Record<Intensity, string> = {
 
 export const BEST_FOR_LABELS: Record<BestFor, string> = {
   family: "Família",
-  parents: "Pais",
   caio: "Caio",
-  sister: "Irmã",
-  caio_sister: "Caio + Irmã",
+  geovanin: "Geovanin",
+  adelaide: "Adelaide",
+  sofia: "Sofia",
+  caio_sofia: "Caio + Sofia",
+  adults: "Geovanin + Adelaide",
   everyone: "Todos",
 };
 

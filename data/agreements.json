@@ -26,7 +26,17 @@
   },
   {
     "id": "agr-6",
-    "text": "Caio e irmã: combinar horário de retorno antes de ir à festa.",
+    "text": "Caio e Sofia: combinar horário de retorno antes de qualquer noite separada.",
     "order": 6
+  },
+  {
+    "id": "agr-7",
+    "text": "Nas Keys, confirmar clima, vento e horários antes de reservar atividade de água.",
+    "order": 7
+  },
+  {
+    "id": "agr-8",
+    "text": "Em dias de troca de base, sair com água, snacks e mapas offline.",
+    "order": 8
   }
 ]

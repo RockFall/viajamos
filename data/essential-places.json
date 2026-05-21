@@ -1,52 +1,106 @@
 [
   {
-    "id": "ep-lodging",
-    "name": "Nossa casa — Coconut Grove",
+    "id": "ep-lodging-miami",
+    "name": "Base Miami — Coconut Grove",
     "type": "lodging",
     "address": "3024 Aviation Avenue, Miami, FL 33133",
-    "notes": "Base da viagem. Check-in após 16h no dia 23.",
+    "area": "Miami",
+    "baseName": "Base Miami",
+    "notes": "Base da primeira parte da viagem, de 22/05 a 27/05.",
     "googleMapsUrl": "https://maps.google.com/?q=3024+Aviation+Avenue+Miami+FL+33133",
     "appleMapsUrl": "https://maps.apple.com/?address=3024+Aviation+Avenue,Miami,FL+33133",
     "uberUrl": "https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=3024+Aviation+Avenue+Miami"
+  },
+  {
+    "id": "ep-lodging-islamorada",
+    "name": "Base Islamorada",
+    "type": "lodging",
+    "address": "82100 Overseas Highway, Islamorada, FL 33036, Estados Unidos",
+    "area": "Islamorada",
+    "baseName": "Base Islamorada",
+    "notes": "Base da segunda parte da viagem, de 27/05 a 30/05.",
+    "googleMapsUrl": "https://maps.google.com/?q=82100+Overseas+Highway+Islamorada+FL+33036",
+    "appleMapsUrl": "https://maps.apple.com/?address=82100+Overseas+Highway,Islamorada,FL+33036",
+    "uberUrl": "https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=82100+Overseas+Highway+Islamorada+FL+33036"
   },
   {
     "id": "ep-airport",
     "name": "Miami International Airport (MIA)",
     "type": "airport",
     "address": "2100 NW 42nd Ave, Miami, FL 33142",
-    "notes": "Chegada dia 23 ~22h. Partida dia 27 ~18h.",
+    "area": "Travel",
+    "baseName": "Aeroporto",
+    "notes": "Chegada/saída internacional; detalhes de voo serão preenchidos no app.",
     "googleMapsUrl": "https://maps.google.com/?q=Miami+International+Airport",
     "uberUrl": "https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=Miami+International+Airport"
+  },
+  {
+    "id": "ep-cnf",
+    "name": "Aeroporto de Belo Horizonte / Confins (CNF)",
+    "type": "airport",
+    "address": "Rodovia LMG 800, Confins, MG",
+    "area": "Travel",
+    "baseName": "Saída BH",
+    "notes": "Ponto de partida em 22/05; preencher terminal/companhia quando confirmado.",
+    "googleMapsUrl": "https://maps.google.com/?q=Aeroporto+Internacional+de+Belo+Horizonte+Confins"
   },
   {
     "id": "ep-pharmacy",
     "name": "CVS Pharmacy",
     "type": "pharmacy",
     "address": "3101 Grand Ave, Coconut Grove, FL 33133",
+    "area": "Miami",
+    "baseName": "Base Miami",
     "notes": "Remédios, protetor solar, itens de farmácia.",
     "googleMapsUrl": "https://maps.google.com/?q=CVS+Coconut+Grove+3101+Grand+Ave"
   },
   {
-    "id": "ep-market",
-    "name": "Trader Joe's",
+    "id": "ep-market-miami",
+    "name": "Trader Joe's Coconut Grove",
     "type": "market",
     "address": "2990 McFarlane Rd, Miami, FL 33133",
+    "area": "Miami",
+    "baseName": "Base Miami",
     "notes": "Mercado principal perto de casa.",
     "googleMapsUrl": "https://maps.google.com/?q=Trader+Joes+Coconut+Grove"
+  },
+  {
+    "id": "ep-market-islamorada",
+    "name": "Publix Super Market at Islamorada",
+    "type": "market",
+    "address": "83268 Overseas Hwy, Islamorada, FL 33036",
+    "area": "Islamorada",
+    "baseName": "Base Islamorada",
+    "notes": "Mercado para água, café da manhã e itens de praia nas Keys.",
+    "googleMapsUrl": "https://maps.google.com/?q=Publix+Islamorada"
   },
   {
     "id": "ep-hospital",
     "name": "Baptist Hospital",
     "type": "hospital",
     "address": "8900 N Kendall Dr, Miami, FL 33176",
+    "area": "Miami",
+    "baseName": "Emergência Miami",
     "notes": "Emergência — ligar 911 nos EUA.",
     "googleMapsUrl": "https://maps.google.com/?q=Baptist+Hospital+Miami"
+  },
+  {
+    "id": "ep-hospital-keys",
+    "name": "Fishermen's Community Hospital",
+    "type": "hospital",
+    "address": "3301 Overseas Hwy, Marathon, FL 33050",
+    "area": "Islamorada",
+    "baseName": "Emergência Keys",
+    "notes": "Referência hospitalar na região das Keys; em emergência, ligar 911.",
+    "googleMapsUrl": "https://maps.google.com/?q=Fishermen%27s+Community+Hospital+Marathon"
   },
   {
     "id": "ep-shopping",
     "name": "CocoWalk",
     "type": "shopping",
     "address": "3015 Grand Ave, Coconut Grove, FL 33133",
+    "area": "Miami",
+    "baseName": "Base Miami",
     "notes": "Shopping pequeno a pé do Grove.",
     "googleMapsUrl": "https://maps.google.com/?q=CocoWalk+Coconut+Grove"
   },
@@ -55,23 +109,49 @@
     "name": "Consulado Geral do Brasil",
     "type": "consulate",
     "address": "80 SW 8th St, Miami, FL 33130",
+    "area": "Miami",
+    "baseName": "Documentos",
     "notes": "Emergências consulares.",
     "googleMapsUrl": "https://maps.google.com/?q=Brazilian+Consulate+Miami"
   },
   {
-    "id": "ep-meeting",
-    "name": "Ponto de encontro — CocoWalk",
+    "id": "ep-meeting-miami",
+    "name": "Ponto de encontro Miami — CocoWalk",
     "type": "meeting_point",
     "address": "3015 Grand Ave, Coconut Grove, FL 33133",
+    "area": "Miami",
+    "baseName": "Base Miami",
     "notes": "Combinado da família se alguém se perder.",
     "googleMapsUrl": "https://maps.google.com/?q=CocoWalk+Coconut+Grove"
+  },
+  {
+    "id": "ep-meeting-islamorada",
+    "name": "Ponto de encontro Islamorada — Rain Barrel Village",
+    "type": "meeting_point",
+    "address": "86700 Overseas Hwy, Islamorada, FL 33036",
+    "area": "Islamorada",
+    "baseName": "Base Islamorada",
+    "notes": "Ponto fácil de reconhecer por causa da Betsy the Lobster.",
+    "googleMapsUrl": "https://maps.google.com/?q=Rain+Barrel+Village"
   },
   {
     "id": "ep-apple",
     "name": "Apple Store — Lincoln Road",
     "type": "shopping",
     "address": "1021 Lincoln Rd, Miami Beach, FL 33139",
+    "area": "Miami",
+    "baseName": "Suporte",
     "notes": "Suporte Apple se precisar.",
     "googleMapsUrl": "https://maps.google.com/?q=Apple+Store+Lincoln+Road"
+  },
+  {
+    "id": "ep-robbies",
+    "name": "Robbie's of Islamorada",
+    "type": "meeting_point",
+    "address": "77522 Overseas Hwy, Islamorada, FL 33036",
+    "area": "Islamorada",
+    "baseName": "Atividades Keys",
+    "notes": "Tarpons, passeios de barco, kayak, snorkeling e alimentação.",
+    "googleMapsUrl": "https://maps.google.com/?q=Robbies+of+Islamorada"
   }
 ]

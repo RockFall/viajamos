@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 /**
- * Generates supabase/RUN_IN_SUPABASE.sql and supabase/migrations/001_initial.sql
- * from data/*.json seed files.
+ * Generates Supabase SQL files from data/*.json:
+ * - RUN_IN_SUPABASE_SCHEMA.sql: DDL, enums, triggers, policies
+ * - RUN_IN_SUPABASE_SEEDS.sql: static family/config/checklists/agreements
+ * - RUN_IN_SUPABASE_DATA.sql: dynamic trip, itinerary, plans, docs, flights, etc.
+ * It also keeps RUN_IN_SUPABASE.sql and migrations/001_initial.sql as all-in-one files.
  */
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
@@ -39,8 +42,8 @@ function sqlInt(val) {
   return String(val);
 }
 
-const SCHEMA = `-- Viajamos — Miami Family Hub
--- Generated schema + seed data
+const SCHEMA = `-- Viajamos — Miami + Islamorada Family Hub
+-- Generated schema only
 
 -- ---------------------------------------------------------------------------
 -- Drop existing objects (reverse dependency order)
@@ -83,14 +86,14 @@ DROP TYPE IF EXISTS event_period CASCADE;
 -- Enums
 -- ---------------------------------------------------------------------------
 CREATE TYPE event_period AS ENUM ('morning', 'afternoon', 'night', 'late_night');
-CREATE TYPE event_category AS ENUM ('food', 'music', 'museum', 'shopping', 'walk', 'travel', 'rest', 'event');
+CREATE TYPE event_category AS ENUM ('food', 'music', 'museum', 'shopping', 'walk', 'travel', 'rest', 'experience', 'event');
 CREATE TYPE event_status AS ENUM ('idea', 'planned', 'reserved', 'booked', 'done', 'cancelled');
 CREATE TYPE possible_plan_category AS ENUM (
   'restaurant', 'cafe', 'jazz', 'electronic_music', 'museum', 'gallery',
   'shopping', 'walk', 'bar', 'experience', 'rainy_day', 'nearby', 'late_night'
 );
 CREATE TYPE intensity AS ENUM ('light', 'moderate', 'intense');
-CREATE TYPE best_for AS ENUM ('family', 'parents', 'caio', 'sister', 'caio_sister', 'everyone');
+CREATE TYPE best_for AS ENUM ('family', 'caio', 'geovanin', 'adelaide', 'sofia', 'caio_sofia', 'adults', 'everyone');
 CREATE TYPE plan_source AS ENUM ('manual', 'ai_generated', 'user_added');
 CREATE TYPE possible_plan_status AS ENUM ('candidate', 'shortlisted', 'added_to_itinerary', 'discarded');
 CREATE TYPE alternative_trigger AS ENUM ('rain', 'tired', 'late_start', 'too_hot', 'reservation_failed', 'extra_energy');
@@ -144,6 +147,9 @@ CREATE TABLE trip_days (
   date DATE NOT NULL,
   title TEXT NOT NULL,
   theme TEXT NOT NULL,
+  area TEXT,
+  base_name TEXT,
+  base_address TEXT,
   weather TEXT,
   is_travel_day BOOLEAN NOT NULL DEFAULT FALSE,
   is_return_day BOOLEAN NOT NULL DEFAULT FALSE,
@@ -231,6 +237,8 @@ CREATE TABLE essential_places (
   name TEXT NOT NULL,
   type essential_place_type NOT NULL,
   address TEXT NOT NULL,
+  area TEXT,
+  base_name TEXT,
   notes TEXT,
   google_maps_url TEXT,
   apple_maps_url TEXT,
@@ -416,9 +424,6 @@ CREATE POLICY "public_all" ON memories FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "public_all" ON agreements FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "public_all" ON travel_timeline_items FOR ALL USING (true) WITH CHECK (true);
 
--- ---------------------------------------------------------------------------
--- Seed data
--- ---------------------------------------------------------------------------
 `;
 
 const family = loadJson("family.json");
@@ -437,14 +442,16 @@ const dayAlternatives = loadJson("day-alternatives.json");
 const travelTimeline = loadJson("travel-timeline.json");
 
 const TRIP_CONFIG = {
-  destination: "Miami",
-  baseAddress: "3024 Aviation Avenue, Miami, FL 33133",
-  startDate: "2026-05-23",
-  endDate: "2026-05-27",
+  destination: "Miami + Islamorada",
+  baseAddress:
+    "Miami: 3024 Aviation Avenue, Miami, FL 33133 · Islamorada: 82100 Overseas Highway, Islamorada, FL 33036",
+  startDate: "2026-05-22",
+  endDate: "2026-05-30",
   mockToday: "2026-05-24",
 };
 
 const seeds = [];
+const data = [];
 
 seeds.push("-- family_members");
 for (const m of family) {
@@ -458,51 +465,51 @@ seeds.push(
   `INSERT INTO trip_config (id, destination, base_address, start_date, end_date, mock_today) VALUES ('default', ${sqlStr(TRIP_CONFIG.destination)}, ${sqlStr(TRIP_CONFIG.baseAddress)}, ${sqlStr(TRIP_CONFIG.startDate)}, ${sqlStr(TRIP_CONFIG.endDate)}, ${sqlStr(TRIP_CONFIG.mockToday)});`
 );
 
-seeds.push("\n-- trip_days");
+data.push("-- trip_days");
 for (const d of tripDays) {
-  seeds.push(
-    `INSERT INTO trip_days (id, date, title, theme, weather, is_travel_day, is_return_day) VALUES (${sqlStr(d.id)}, ${sqlStr(d.date)}, ${sqlStr(d.title)}, ${sqlStr(d.theme)}, ${sqlStr(d.weather ?? null)}, ${sqlBool(d.isTravelDay ?? false)}, ${sqlBool(d.isReturnDay ?? false)});`
+  data.push(
+    `INSERT INTO trip_days (id, date, title, theme, area, base_name, base_address, weather, is_travel_day, is_return_day) VALUES (${sqlStr(d.id)}, ${sqlStr(d.date)}, ${sqlStr(d.title)}, ${sqlStr(d.theme)}, ${sqlStr(d.area ?? null)}, ${sqlStr(d.baseName ?? null)}, ${sqlStr(d.baseAddress ?? null)}, ${sqlStr(d.weather ?? null)}, ${sqlBool(d.isTravelDay ?? false)}, ${sqlBool(d.isReturnDay ?? false)});`
   );
 }
 
-seeds.push("\n-- itinerary_events");
+data.push("\n-- itinerary_events");
 for (const e of itineraryEvents) {
-  seeds.push(
+  data.push(
     `INSERT INTO itinerary_events (id, title, description, date, start_time, end_time, period, location_name, address, neighborhood, category, people, status, group_id, group_label, google_maps_url, apple_maps_url, website_url, ticket_url, reservation_url, uber_url, notes, leave_by) VALUES (${sqlStr(e.id)}, ${sqlStr(e.title)}, ${sqlStr(e.description ?? null)}, ${sqlStr(e.date)}, ${sqlStr(e.startTime ?? null)}, ${sqlStr(e.endTime ?? null)}, ${sqlStr(e.period)}, ${sqlStr(e.locationName ?? null)}, ${sqlStr(e.address ?? null)}, ${sqlStr(e.neighborhood ?? null)}, ${sqlStr(e.category)}, ${sqlArray(e.people)}, ${sqlStr(e.status)}, ${sqlStr(e.groupId ?? null)}, ${sqlStr(e.groupLabel ?? null)}, ${sqlStr(e.googleMapsUrl ?? null)}, ${sqlStr(e.appleMapsUrl ?? null)}, ${sqlStr(e.websiteUrl ?? null)}, ${sqlStr(e.ticketUrl ?? null)}, ${sqlStr(e.reservationUrl ?? null)}, ${sqlStr(e.uberUrl ?? null)}, ${sqlStr(e.notes ?? null)}, ${sqlStr(e.leaveBy ?? null)});`
   );
 }
 
-seeds.push("\n-- possible_plans");
+data.push("\n-- possible_plans");
 for (const p of possiblePlans) {
-  seeds.push(
+  data.push(
     `INSERT INTO possible_plans (id, title, subtitle, description, why_go, category, periods, neighborhood, address, estimated_duration_minutes, price_level, intensity, best_for, google_maps_url, apple_maps_url, website_url, ticket_url, reservation_url, instagram_url, uber_url, tags, status, source, notes, is_nearby) VALUES (${sqlStr(p.id)}, ${sqlStr(p.title)}, ${sqlStr(p.subtitle ?? null)}, ${sqlStr(p.description)}, ${sqlStr(p.whyGo ?? null)}, ${sqlStr(p.category)}, ${sqlArray(p.periods, "event_period")}, ${sqlStr(p.neighborhood ?? null)}, ${sqlStr(p.address ?? null)}, ${sqlInt(p.estimatedDurationMinutes ?? null)}, ${sqlInt(p.priceLevel ?? null)}, ${sqlStr(p.intensity)}, ${sqlArray(p.bestFor, "best_for")}, ${sqlStr(p.googleMapsUrl ?? null)}, ${sqlStr(p.appleMapsUrl ?? null)}, ${sqlStr(p.websiteUrl ?? null)}, ${sqlStr(p.ticketUrl ?? null)}, ${sqlStr(p.reservationUrl ?? null)}, ${sqlStr(p.instagramUrl ?? null)}, ${sqlStr(p.uberUrl ?? null)}, ${sqlArray(p.tags)}, ${sqlStr(p.status)}, ${sqlStr(p.source ?? null)}, ${sqlStr(p.notes ?? null)}, ${sqlBool(p.isNearby ?? false)});`
   );
 }
 
-seeds.push("\n-- day_alternative_plans");
+data.push("\n-- day_alternative_plans");
 for (const a of dayAlternatives) {
-  seeds.push(
+  data.push(
     `INSERT INTO day_alternative_plans (id, day_id, trigger, title, description, plan_item_ids) VALUES (${sqlStr(a.id)}, ${sqlStr(a.dayId)}, ${sqlStr(a.trigger)}, ${sqlStr(a.title)}, ${sqlStr(a.description)}, ${sqlArray(a.planItemIds)});`
   );
 }
 
-seeds.push("\n-- essential_places");
+data.push("\n-- essential_places");
 for (const p of essentialPlaces) {
-  seeds.push(
-    `INSERT INTO essential_places (id, name, type, address, notes, google_maps_url, apple_maps_url, uber_url) VALUES (${sqlStr(p.id)}, ${sqlStr(p.name)}, ${sqlStr(p.type)}, ${sqlStr(p.address)}, ${sqlStr(p.notes ?? null)}, ${sqlStr(p.googleMapsUrl ?? null)}, ${sqlStr(p.appleMapsUrl ?? null)}, ${sqlStr(p.uberUrl ?? null)});`
+  data.push(
+    `INSERT INTO essential_places (id, name, type, address, area, base_name, notes, google_maps_url, apple_maps_url, uber_url) VALUES (${sqlStr(p.id)}, ${sqlStr(p.name)}, ${sqlStr(p.type)}, ${sqlStr(p.address)}, ${sqlStr(p.area ?? null)}, ${sqlStr(p.baseName ?? null)}, ${sqlStr(p.notes ?? null)}, ${sqlStr(p.googleMapsUrl ?? null)}, ${sqlStr(p.appleMapsUrl ?? null)}, ${sqlStr(p.uberUrl ?? null)});`
   );
 }
 
-seeds.push("\n-- travel_documents");
+data.push("\n-- travel_documents");
 for (const d of travelDocuments) {
-  seeds.push(
+  data.push(
     `INSERT INTO travel_documents (id, title, type, url, notes) VALUES (${sqlStr(d.id)}, ${sqlStr(d.title)}, ${sqlStr(d.type)}, ${sqlStr(d.url ?? null)}, ${sqlStr(d.notes ?? null)});`
   );
 }
 
-seeds.push("\n-- trip_tasks");
+data.push("\n-- trip_tasks");
 for (const t of tripTasks) {
-  seeds.push(
+  data.push(
     `INSERT INTO trip_tasks (id, title, due_date, related_plan_id, assigned_to, status, priority) VALUES (${sqlStr(t.id)}, ${sqlStr(t.title)}, ${sqlStr(t.dueDate ?? null)}, ${sqlStr(t.relatedPlanId ?? null)}, ${sqlStr(t.assignedTo ?? null)}, ${sqlStr(t.status)}, ${sqlStr(t.priority)});`
   );
 }
@@ -514,23 +521,23 @@ for (const c of checklists) {
   );
 }
 
-seeds.push("\n-- night_events");
+data.push("\n-- night_events");
 for (const n of nightEvents) {
-  seeds.push(
+  data.push(
     `INSERT INTO night_events (id, date, type, title, venue, neighborhood, start_time, end_time, price_info, dress_code, intensity, buy_ahead, google_maps_url, apple_maps_url, website_url, ticket_url, uber_url, status, notes) VALUES (${sqlStr(n.id)}, ${sqlStr(n.date)}, ${sqlStr(n.type)}, ${sqlStr(n.title)}, ${sqlStr(n.venue)}, ${sqlStr(n.neighborhood ?? null)}, ${sqlStr(n.startTime)}, ${sqlStr(n.endTime ?? null)}, ${sqlStr(n.priceInfo ?? null)}, ${sqlStr(n.dressCode ?? null)}, ${sqlStr(n.intensity)}, ${sqlBool(n.buyAhead ?? false)}, ${sqlStr(n.googleMapsUrl ?? null)}, ${sqlStr(n.appleMapsUrl ?? null)}, ${sqlStr(n.websiteUrl ?? null)}, ${sqlStr(n.ticketUrl ?? null)}, ${sqlStr(n.uberUrl ?? null)}, ${sqlStr(n.status)}, ${sqlStr(n.notes ?? null)});`
   );
 }
 
-seeds.push("\n-- flights");
+data.push("\n-- flights");
 for (const f of flights) {
-  seeds.push(
+  data.push(
     `INSERT INTO flights (id, passenger_id, passenger_name, route, "from", "to", flight_number, seat, terminal, gate, boarding_time, departure_time, arrival_time, date, status, confirmation_code) VALUES (${sqlStr(f.id)}, ${sqlStr(f.passengerId)}, ${sqlStr(f.passengerName)}, ${sqlStr(f.route)}, ${sqlStr(f.from)}, ${sqlStr(f.to)}, ${sqlStr(f.flightNumber)}, ${sqlStr(f.seat ?? null)}, ${sqlStr(f.terminal ?? null)}, ${sqlStr(f.gate ?? null)}, ${sqlStr(f.boardingTime ?? null)}, ${sqlStr(f.departureTime)}, ${sqlStr(f.arrivalTime ?? null)}, ${sqlStr(f.date)}, ${sqlStr(f.status)}, ${sqlStr(f.confirmationCode ?? null)});`
   );
 }
 
-seeds.push("\n-- memories");
+data.push("\n-- memories");
 for (const m of memories) {
-  seeds.push(
+  data.push(
     `INSERT INTO memories (id, day_id, date, best_moment, best_food, favorite_place, rating, notes, photo_url) VALUES (${sqlStr(m.id)}, ${sqlStr(m.dayId)}, ${sqlStr(m.date)}, ${sqlStr(m.bestMoment ?? null)}, ${sqlStr(m.bestFood ?? null)}, ${sqlStr(m.favoritePlace ?? null)}, ${sqlInt(m.rating ?? null)}, ${sqlStr(m.notes ?? null)}, ${sqlStr(m.photoUrl ?? null)});`
   );
 }
@@ -542,23 +549,34 @@ for (const a of agreements) {
   );
 }
 
-seeds.push("\n-- travel_timeline_items");
+data.push("\n-- travel_timeline_items");
 for (const t of travelTimeline) {
-  seeds.push(
+  data.push(
     `INSERT INTO travel_timeline_items (id, time, label, date, is_departure) VALUES (${sqlStr(t.id)}, ${sqlStr(t.time)}, ${sqlStr(t.label)}, ${sqlStr(t.date)}, ${sqlBool(t.isDeparture ?? false)});`
   );
 }
 
-const fullSql = SCHEMA + seeds.join("\n") + "\n";
+const seedSql = `-- Viajamos — static seed data\n-- Run after RUN_IN_SUPABASE_SCHEMA.sql\n\n${seeds.join("\n")}\n`;
+const dataSql = `-- Viajamos — trip data\n-- Run after RUN_IN_SUPABASE_SEEDS.sql\n\n${data.join("\n")}\n`;
+const fullSql = SCHEMA + "\n-- ---------------------------------------------------------------------------\n-- Static seed data\n-- ---------------------------------------------------------------------------\n" + seeds.join("\n") + "\n\n-- ---------------------------------------------------------------------------\n-- Trip data\n-- ---------------------------------------------------------------------------\n" + data.join("\n") + "\n";
 
 const runFile = join(root, "supabase", "RUN_IN_SUPABASE.sql");
+const runSchemaFile = join(root, "supabase", "RUN_IN_SUPABASE_SCHEMA.sql");
+const runSeedsFile = join(root, "supabase", "RUN_IN_SUPABASE_SEEDS.sql");
+const runDataFile = join(root, "supabase", "RUN_IN_SUPABASE_DATA.sql");
 const migrationFile = join(root, "supabase", "migrations", "001_initial.sql");
 const schemaFile = join(root, "supabase", "schema.sql");
 
 writeFileSync(runFile, fullSql);
+writeFileSync(runSchemaFile, SCHEMA);
+writeFileSync(runSeedsFile, seedSql);
+writeFileSync(runDataFile, dataSql);
 writeFileSync(migrationFile, fullSql);
-writeFileSync(schemaFile, fullSql);
+writeFileSync(schemaFile, SCHEMA);
 
 console.log(`Wrote ${runFile}`);
+console.log(`Wrote ${runSchemaFile}`);
+console.log(`Wrote ${runSeedsFile}`);
+console.log(`Wrote ${runDataFile}`);
 console.log(`Wrote ${migrationFile}`);
 console.log(`Wrote ${schemaFile}`);

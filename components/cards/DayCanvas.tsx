@@ -68,6 +68,12 @@ export function DayCanvas({
             </p>
             <h2 className="text-xl font-bold">{day.title}</h2>
             <p className="text-sm opacity-90">{day.theme}</p>
+            {day.baseName && (
+              <p className="mt-1 text-xs opacity-85">
+                Base: {day.baseName}
+                {day.baseAddress ? ` · ${day.baseAddress}` : ""}
+              </p>
+            )}
           </div>
           {expanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </div>

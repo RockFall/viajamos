@@ -1,64 +1,77 @@
 [
   {
     "id": "task-1",
-    "title": "Comprar ingresso do jazz no Ball & Chain",
-    "dueDate": "2026-05-24",
-    "relatedPlanId": "evt-24-jazz",
+    "title": "Preencher detalhes do voo de ida BH → Miami",
+    "dueDate": "2026-05-22",
+    "relatedPlanId": "evt-22-flight-placeholder",
     "assignedTo": "caio",
-    "status": "done",
+    "status": "open",
     "priority": "high"
   },
   {
     "id": "task-2",
-    "title": "Confirmar reserva do Mandolin (25/05)",
-    "dueDate": "2026-05-25",
-    "relatedPlanId": "evt-25-dinner",
-    "assignedTo": "mother",
-    "status": "done",
-    "priority": "medium"
-  },
-  {
-    "id": "task-3",
-    "title": "Comprar ingressos Club Space",
-    "dueDate": "2026-05-26",
-    "relatedPlanId": "evt-26-club",
-    "assignedTo": "caio",
-    "status": "done",
+    "title": "Confirmar check-in e instruções da base Miami",
+    "dueDate": "2026-05-22",
+    "relatedPlanId": "evt-22-arrival-miami",
+    "assignedTo": "geovanin",
+    "status": "open",
     "priority": "high"
   },
   {
-    "id": "task-4",
-    "title": "Escolher restaurante do domingo (se sobrar tempo)",
-    "dueDate": "2026-05-26",
-    "status": "open",
-    "priority": "low"
-  },
-  {
-    "id": "task-5",
-    "title": "Definir quem vai na festa do Club Space",
+    "id": "task-3",
+    "title": "Reservar Mandolin ou alternativa no Design District",
     "dueDate": "2026-05-25",
-    "relatedPlanId": "evt-26-club",
-    "status": "done",
+    "relatedPlanId": "evt-25-mandolin",
+    "assignedTo": "adelaide",
+    "status": "open",
     "priority": "medium"
   },
   {
-    "id": "task-6",
-    "title": "Confirmar horário de check-out Airbnb",
+    "id": "task-4",
+    "title": "Conferir line-up e ingresso do Club Space",
+    "dueDate": "2026-05-26",
+    "relatedPlanId": "evt-26-club-space",
+    "assignedTo": "caio",
+    "status": "open",
+    "priority": "medium"
+  },
+  {
+    "id": "task-5",
+    "title": "Confirmar transporte Miami → Islamorada",
     "dueDate": "2026-05-27",
+    "relatedPlanId": "evt-27-road-to-keys",
+    "status": "open",
+    "priority": "high"
+  },
+  {
+    "id": "task-6",
+    "title": "Reservar/checar atividade principal em Robbie's",
+    "dueDate": "2026-05-28",
+    "relatedPlanId": "evt-28-robbies",
+    "assignedTo": "sofia",
     "status": "open",
     "priority": "medium"
   },
   {
     "id": "task-7",
-    "title": "Fazer check-in online do voo de volta",
-    "dueDate": "2026-05-27",
-    "relatedPlanId": "evt-27-departure",
-    "assignedTo": "father",
+    "title": "Confirmar jantar no Morada Bay ou Square Grouper",
+    "dueDate": "2026-05-28",
+    "relatedPlanId": "evt-29-morada-bay",
+    "assignedTo": "adelaide",
+    "status": "open",
+    "priority": "medium"
+  },
+  {
+    "id": "task-8",
+    "title": "Preencher detalhes de retorno/saída em 30/05",
+    "dueDate": "2026-05-30",
+    "relatedPlanId": "evt-30-checkout",
+    "assignedTo": "caio",
     "status": "open",
     "priority": "high"
   },
   {
-    "id": "task-8",
+    "id": "task-9",
     "title": "Comprar eSIM / chip de dados EUA",
     "dueDate": "2026-05-22",
     "status": "open",

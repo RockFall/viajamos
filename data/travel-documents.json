@@ -1,45 +1,49 @@
 [
   {
     "id": "doc-flights",
-    "title": "Confirmações de voo — American Airlines",
+    "title": "Detalhes dos voos — a preencher",
     "type": "flight",
-    "url": "https://www.aa.com/reservation/view/find-your-reservation",
-    "notes": "Código de confirmação: XK7M2P (fictício para demo)"
+    "notes": "Não há dados sensíveis salvos. Preencher companhia, número do voo, horários e assentos no app."
   },
   {
-    "id": "doc-lodging",
-    "title": "Reserva Airbnb — Coconut Grove",
+    "id": "doc-lodging-miami",
+    "title": "Hospedagem Miami — Coconut Grove",
     "type": "lodging",
-    "url": "https://www.airbnb.com/trips",
-    "notes": "Check-in 23/05 após 16h. Endereço: 3024 Aviation Avenue."
+    "notes": "Base 22/05-27/05. Endereço: 3024 Aviation Avenue, Miami, FL 33133."
   },
   {
-    "id": "doc-jazz-ticket",
-    "title": "Ingressos Ball & Chain — Jazz",
-    "type": "ticket",
-    "url": "https://www.ballandchainmiami.com/events",
-    "notes": "4 ingressos para sábado 24/05"
+    "id": "doc-lodging-islamorada",
+    "title": "Hospedagem Islamorada",
+    "type": "lodging",
+    "notes": "Base 27/05-30/05. Endereço: 82100 Overseas Highway, Islamorada, FL 33036, Estados Unidos."
   },
   {
-    "id": "doc-club-ticket",
-    "title": "Ingressos Club Space",
+    "id": "doc-robbies",
+    "title": "Robbie's of Islamorada — atividades",
     "type": "ticket",
-    "url": "https://www.clubspace.com/events",
-    "notes": "Caio + Irmã — sábado 26/05"
+    "url": "https://robbies.com/activities.htm",
+    "notes": "Escolher entre tarpon feeding, glass bottom boat, kayak/paddle, snorkeling ou eco tour."
   },
   {
     "id": "doc-mandolin",
-    "title": "Reserva Mandolin — 25/05 20h",
+    "title": "Reserva Mandolin — 25/05",
     "type": "reservation",
     "url": "https://www.mandolinmiami.com",
-    "notes": "Mesa para 4 pessoas"
+    "notes": "Mesa para 4 pessoas; confirmar horário."
   },
   {
-    "id": "doc-jaguar",
-    "title": "Reserva Jaguar — 26/05 20h",
+    "id": "doc-club-space",
+    "title": "Club Space — line-up/ingresso opcional",
+    "type": "ticket",
+    "url": "https://www.clubspace.com/",
+    "notes": "Comprar somente se Caio e Sofia confirmarem disposição e line-up."
+  },
+  {
+    "id": "doc-morada-bay",
+    "title": "Morada Bay Beach Cafe — 29/05",
     "type": "reservation",
-    "url": "https://www.jaguarmiami.com",
-    "notes": "Mesa para 4 pessoas"
+    "url": "https://www.moradabaykeys.com/ada/dining/beach-cafe/",
+    "notes": "Restaurante na areia; confirmar política de reserva."
   },
   {
     "id": "doc-insurance",
@@ -53,5 +57,12 @@
     "type": "ticket",
     "url": "https://icamiami.org/visit",
     "notes": "Entrada gratuita, sem reserva necessária"
+  },
+  {
+    "id": "doc-theater-sea",
+    "title": "Theater of the Sea — horários",
+    "type": "ticket",
+    "url": "https://theaterofthesea.com/attractions/hours-show-schedule/",
+    "notes": "Shows contínuos; chegar antes das 14h para aproveitar melhor."
   }
 ]

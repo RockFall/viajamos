@@ -167,10 +167,11 @@ export async function updateMockToday(
     .from("trip_config")
     .upsert({
       id: "default",
-      destination: "Miami",
-      base_address: "3024 Aviation Avenue, Miami, FL 33133",
-      start_date: "2026-05-23",
-      end_date: "2026-05-27",
+      destination: "Miami + Islamorada",
+      base_address:
+        "Miami: 3024 Aviation Avenue, Miami, FL 33133 · Islamorada: 82100 Overseas Highway, Islamorada, FL 33036",
+      start_date: "2026-05-22",
+      end_date: "2026-05-30",
       mock_today: mockToday,
     });
   if (error) console.warn("Failed to update mock today:", error.message);

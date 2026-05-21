@@ -5,10 +5,17 @@ interface DayHeaderProps {
   date: string;
   theme: string;
   weather?: string;
+  baseName?: string;
   baseAddress?: string;
 }
 
-export function DayHeader({ date, theme, weather, baseAddress }: DayHeaderProps) {
+export function DayHeader({
+  date,
+  theme,
+  weather,
+  baseName,
+  baseAddress,
+}: DayHeaderProps) {
   return (
     <header className="gradient-sunset -mx-4 mb-6 rounded-b-3xl px-4 pb-6 pt-4">
       <p className="text-sm font-medium text-sunset-pink">Miami Family Hub</p>
@@ -26,7 +33,7 @@ export function DayHeader({ date, theme, weather, baseAddress }: DayHeaderProps)
         {baseAddress && (
           <span className="flex items-center gap-1">
             <MapPin size={14} className="text-teal" />
-            {baseAddress}
+            {baseName ? `${baseName}: ${baseAddress}` : baseAddress}
           </span>
         )}
       </div>

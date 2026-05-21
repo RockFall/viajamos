@@ -31,10 +31,11 @@ import dayAlternativesData from "@/data/day-alternatives.json";
 import travelTimelineData from "@/data/travel-timeline.json";
 
 export const TRIP_CONFIG = {
-  destination: "Miami",
-  baseAddress: "3024 Aviation Avenue, Miami, FL 33133",
-  startDate: "2026-05-23",
-  endDate: "2026-05-27",
+  destination: "Miami + Islamorada",
+  baseAddress:
+    "Miami: 3024 Aviation Avenue, Miami, FL 33133 · Islamorada: 82100 Overseas Highway, Islamorada, FL 33036",
+  startDate: "2026-05-22",
+  endDate: "2026-05-30",
   mockToday: "2026-05-24",
 } as const;
 

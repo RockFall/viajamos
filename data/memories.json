@@ -1,8 +1,18 @@
 [
   {
     "id": "mem-1",
-    "dayId": "day-24",
-    "date": "2026-05-24",
+    "dayId": "day-23",
+    "date": "2026-05-23",
+    "bestMoment": "",
+    "bestFood": "",
+    "favoritePlace": "",
+    "rating": 0,
+    "notes": ""
+  },
+  {
+    "id": "mem-2",
+    "dayId": "day-28",
+    "date": "2026-05-28",
     "bestMoment": "",
     "bestFood": "",
     "favoritePlace": "",

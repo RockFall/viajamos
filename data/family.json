@@ -1,26 +1,26 @@
 [
   {
     "id": "caio",
-    "name": "Caio Rocha",
+    "name": "Caio",
     "shortName": "Caio",
     "color": "#FF6B6B"
   },
   {
-    "id": "father",
-    "name": "Pai",
-    "shortName": "Pai",
+    "id": "geovanin",
+    "name": "Geovanin",
+    "shortName": "Geovanin",
     "color": "#4ECDC4"
   },
   {
-    "id": "mother",
-    "name": "Mãe",
-    "shortName": "Mãe",
+    "id": "adelaide",
+    "name": "Adelaide",
+    "shortName": "Adelaide",
     "color": "#FFE66D"
   },
   {
-    "id": "sister",
-    "name": "Irmã",
-    "shortName": "Irmã",
+    "id": "sofia",
+    "name": "Sofia",
+    "shortName": "Sofia",
     "color": "#A78BFA"
   }
 ]

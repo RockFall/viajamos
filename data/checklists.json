@@ -10,8 +10,9 @@
       { "id": "cl-b4", "label": "Cartões internacionais avisados" },
       { "id": "cl-b5", "label": "eSIM / chip de dados" },
       { "id": "cl-b6", "label": "Adaptador de tomada EUA" },
-      { "id": "cl-b7", "label": "Confirmação Airbnb impressa/salva" },
-      { "id": "cl-b8", "label": "Ingressos e reservas salvas offline" }
+      { "id": "cl-b7", "label": "Confirmações das bases Miami e Islamorada salvas offline" },
+      { "id": "cl-b8", "label": "Ingressos, reservas e mapas salvos offline" },
+      { "id": "cl-b9", "label": "Protetor solar, boné e roupa de água para as Keys" }
     ]
   },
   {
@@ -24,7 +25,7 @@
       { "id": "cl-t3", "label": "Celular carregado + carregador" },
       { "id": "cl-t4", "label": "Remédios de uso contínuo" },
       { "id": "cl-t5", "label": "Casaco leve (avião gelado)" },
-      { "id": "cl-t6", "label": "Documento da reserva Airbnb" },
+      { "id": "cl-t6", "label": "Documento da hospedagem Miami" },
       { "id": "cl-t7", "label": "Dinheiro / cartão internacional" },
       { "id": "cl-t8", "label": "Fones de ouvido" }
     ]
@@ -46,12 +47,12 @@
     "title": "Dia de volta",
     "type": "return",
     "items": [
-      { "id": "cl-r1", "label": "Check-out Airbnb feito" },
+      { "id": "cl-r1", "label": "Check-out da base Islamorada feito" },
       { "id": "cl-r2", "label": "Conferir pertences no quarto" },
       { "id": "cl-r3", "label": "Check-in online do voo" },
       { "id": "cl-r4", "label": "Líquidos na mala despachada" },
       { "id": "cl-r5", "label": "Souvenirs na mala certa" },
-      { "id": "cl-r6", "label": "Uber para o aeroporto com folga" }
+      { "id": "cl-r6", "label": "Transporte para o aeroporto/retorno com folga" }
     ]
   }
 ]

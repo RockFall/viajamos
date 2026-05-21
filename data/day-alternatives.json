@@ -1,18 +1,26 @@
 [
   {
-    "id": "alt-24-rain",
-    "dayId": "day-24",
+    "id": "alt-22-delay",
+    "dayId": "day-22",
+    "trigger": "late_start",
+    "title": "Chegada tarde sem compromisso",
+    "description": "Ir direto para a base Miami, deixar compras e restaurantes para a manhã seguinte",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-23-rain",
+    "dayId": "day-23",
     "trigger": "rain",
-    "title": "Dia indoor em Coconut Grove",
-    "description": "Books & Books, café coberto e jantar no Peacock Garden",
+    "title": "Coconut Grove indoor",
+    "description": "CocoWalk, Books & Books, mercado e jantar perto da base Miami",
     "planItemIds": []
   },
   {
     "id": "alt-24-tired",
     "dayId": "day-24",
     "trigger": "tired",
-    "title": "Dia leve perto de casa",
-    "description": "Mercado local, almoço no Grove e descanso à tarde",
+    "title": "Little Havana mais curto",
+    "description": "Fazer Versailles + Ball & Chain e pular a caminhada longa pela Calle Ocho",
     "planItemIds": []
   },
   {
@@ -28,15 +36,47 @@
     "dayId": "day-25",
     "trigger": "extra_energy",
     "title": "Noite extra",
-    "description": "Wynwood Walls de noite + bar no Wynwood",
+    "description": "Lagniappe para Caio e Sofia; Geovanin e Adelaide descansam na base",
     "planItemIds": []
   },
   {
-    "id": "alt-26-tired",
+    "id": "alt-26-hot",
     "dayId": "day-26",
+    "trigger": "too_hot",
+    "title": "Shopping com ar-condicionado",
+    "description": "Trocar Wynwood por Aventura Mall ou Bayside Marketplace",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-27-late",
+    "dayId": "day-27",
+    "trigger": "late_start",
+    "title": "Chegada direta em Islamorada",
+    "description": "Pular paradas na estrada e ir direto para a base; Lorelei fica só se houver energia",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-28-wind",
+    "dayId": "day-28",
+    "trigger": "too_hot",
+    "title": "Menos água, mais shows",
+    "description": "Se vento/mar atrapalhar Robbie's, priorizar Theater of the Sea e jantar cedo",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-29-rain",
+    "dayId": "day-29",
+    "trigger": "rain",
+    "title": "Islamorada indoor",
+    "description": "History of Diving Museum, almoço longo e compras cobertas/rápidas no Rain Barrel",
+    "planItemIds": []
+  },
+  {
+    "id": "alt-30-tired",
+    "dayId": "day-30",
     "trigger": "tired",
-    "title": "Sábado tranquilo",
-    "description": "Praia em Key Biscayne + jantar cedo em família",
+    "title": "Saída sem paradas",
+    "description": "Café simples, malas e deslocamento direto conforme horário de retorno",
     "planItemIds": []
   }
 ]

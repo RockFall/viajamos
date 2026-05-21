@@ -1,88 +1,89 @@
 [
   {
     "id": "tl-dep-1",
-    "time": "15:30",
-    "label": "Sair de casa para o aeroporto",
-    "date": "2026-05-23",
+    "time": "A definir",
+    "label": "Sair para o aeroporto em Belo Horizonte",
+    "date": "2026-05-22",
     "isDeparture": true
   },
   {
     "id": "tl-dep-2",
-    "time": "16:15",
-    "label": "Chegar ao aeroporto GRU",
-    "date": "2026-05-23"
+    "time": "A definir",
+    "label": "Check-in e despacho de bagagem",
+    "date": "2026-05-22"
   },
   {
     "id": "tl-dep-3",
-    "time": "17:00",
-    "label": "Check-in e despacho de bagagem",
-    "date": "2026-05-23"
+    "time": "A definir",
+    "label": "Embarque para Miami",
+    "date": "2026-05-22"
   },
   {
     "id": "tl-dep-4",
-    "time": "18:00",
-    "label": "Segurança e imigração",
-    "date": "2026-05-23"
+    "time": "A definir",
+    "label": "Chegada em Miami, imigração e bagagem",
+    "date": "2026-05-22"
   },
   {
     "id": "tl-dep-5",
-    "time": "19:00",
-    "label": "Jantar no aeroporto",
-    "date": "2026-05-23"
+    "time": "A definir",
+    "label": "Uber/carro até a base Miami",
+    "date": "2026-05-22"
   },
   {
-    "id": "tl-dep-6",
-    "time": "20:45",
-    "label": "Embarque",
-    "date": "2026-05-23"
-  },
-  {
-    "id": "tl-dep-7",
-    "time": "21:30",
-    "label": "Decolagem GRU → MIA",
-    "date": "2026-05-23"
-  },
-  {
-    "id": "tl-ret-1",
-    "time": "10:00",
-    "label": "Check-out do Airbnb",
-    "date": "2026-05-27"
-  },
-  {
-    "id": "tl-ret-2",
-    "time": "14:00",
-    "label": "Sair para o aeroporto MIA",
+    "id": "tl-keys-1",
+    "time": "09:30",
+    "label": "Organizar malas e check-out da base Miami",
     "date": "2026-05-27",
     "isDeparture": true
   },
   {
-    "id": "tl-ret-3",
-    "time": "15:00",
-    "label": "Chegar ao aeroporto",
+    "id": "tl-keys-2",
+    "time": "10:00",
+    "label": "Sair de Miami rumo a Islamorada",
     "date": "2026-05-27"
+  },
+  {
+    "id": "tl-keys-3",
+    "time": "12:00",
+    "label": "Parada flexível na Overseas Highway",
+    "date": "2026-05-27"
+  },
+  {
+    "id": "tl-keys-4",
+    "time": "14:00",
+    "label": "Chegada à base Islamorada",
+    "date": "2026-05-27"
+  },
+  {
+    "id": "tl-ret-1",
+    "time": "09:30",
+    "label": "Check-out da base Islamorada",
+    "date": "2026-05-30"
+  },
+  {
+    "id": "tl-ret-2",
+    "time": "A definir",
+    "label": "Sair de Islamorada conforme voo/retorno",
+    "date": "2026-05-30",
+    "isDeparture": true
+  },
+  {
+    "id": "tl-ret-3",
+    "time": "A definir",
+    "label": "Chegar ao aeroporto ou próximo trecho",
+    "date": "2026-05-30"
   },
   {
     "id": "tl-ret-4",
-    "time": "15:30",
+    "time": "A definir",
     "label": "Check-in e bagagem",
-    "date": "2026-05-27"
+    "date": "2026-05-30"
   },
   {
     "id": "tl-ret-5",
-    "time": "16:30",
-    "label": "Segurança e imigração",
-    "date": "2026-05-27"
-  },
-  {
-    "id": "tl-ret-6",
-    "time": "17:15",
-    "label": "Embarque",
-    "date": "2026-05-27"
-  },
-  {
-    "id": "tl-ret-7",
-    "time": "18:00",
-    "label": "Decolagem MIA → GRU",
-    "date": "2026-05-27"
+    "time": "A definir",
+    "label": "Embarque/retorno",
+    "date": "2026-05-30"
   }
 ]
